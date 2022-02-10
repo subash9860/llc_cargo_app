@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luxras_light_cargo/Screen/book_trip_screen.dart';
 
 import './account_screen.dart';
 import './home_screen.dart';
@@ -81,6 +82,8 @@ class _TabScreenState extends State<TabScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
           // Booking new trip screen
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => const BookTripScreen()));
         },
         child: const Icon(Icons.local_shipping_outlined),
       ),

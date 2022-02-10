@@ -23,13 +23,13 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
           // color: Colors.black,
           //  textTheme: Colors.black,
-
+          foregroundColor: Colors.deepOrange,
           backgroundColor: Colors.white,
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.vertical(
-          //       bottom: Radius.circular(18),
-          //     ),
-          //   ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(10),
+              ),
+            ),
         ),
         //colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
       ),
