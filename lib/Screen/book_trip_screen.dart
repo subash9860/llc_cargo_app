@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
-class BookTripScreen extends StatelessWidget {
+class BookTripScreen extends StatefulWidget {
   const BookTripScreen({Key? key}) : super(key: key);
 
   @override
+  State<BookTripScreen> createState() => _BookTripScreenState();
+}
+
+class _BookTripScreenState extends State<BookTripScreen> {
+  @override
   Widget build(BuildContext context) {
+    var val;
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
@@ -46,27 +52,6 @@ class BookTripScreen extends StatelessWidget {
                         child: Image.asset("./assets/parcel.png"),
                       ),
                     ),
-                    // Positioned(
-                    //     bottom: 0,
-                    //     right: 0,
-                    //     child: 
-                        // Radio(
-                          // value: "Parsal", fillColor: MaterialStateProperty<Color> Color(value) fromARGB(255, 136, 125, 91),
-                          // activeColor: Colors.deepOrange,
-                          // groupValue: "",
-                          // onChanged: (_) {
-                            // print("object");
-                          // },
-                          //  groupValue: groupValue, onChanged: onChanged)
-                        // )
-                        // CircleAvatar(
-                        //   radius: 20,
-                        //   child: Card(
-                        //     shadowColor: Colors.deepOrange,
-                        //     color: Colors.black,
-                        //   ),
-                        // ),
-                        // )
                   ],
                 ),
                 Stack(
@@ -95,6 +80,21 @@ class BookTripScreen extends StatelessWidget {
                   ],
                 )
               ],
+            ),
+            Radio(
+              value: 1,
+              groupValue: val,
+              onChanged: (value) {
+                setState(() {
+                  val = value;
+                });
+              },
+              toggleable: true, 
+              activeColor: Color.fromARGB(255, 219, 67, 21),
+              autofocus: true,
+              hoverColor: Colors.red,
+              mouseCursor: MouseCursor.uncontrolled,
+              // overlayColor: Color.fromARGB(255, 146, 131, 130),
             ),
           ],
         ),
