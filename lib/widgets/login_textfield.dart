@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class LginTextField extends StatelessWidget {
+class LoginTextField extends StatelessWidget {
   final String textName;
   final Icon iconName;
-  const LginTextField(
+  const LoginTextField(
       {Key? key, required this.textName, required this.iconName})
       : super(key: key);
 

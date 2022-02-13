@@ -50,7 +50,7 @@ class SignupPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const LginTextField(
+                const LoginTextField(
                   textName: "First Name",
                   iconName: Icon(
                     Icons.face_outlined,
@@ -61,7 +61,7 @@ class SignupPage extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.032,
                 ),
-                const LginTextField(
+                const LoginTextField(
                   textName: "Email",
                   iconName: Icon(
                     Icons.email_outlined,
@@ -72,7 +72,7 @@ class SignupPage extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.032,
                 ),
-                const LginTextField(
+                const LoginTextField(
                   textName: "Phone number",
                   iconName: Icon(
                     Icons.phone_outlined,
@@ -83,7 +83,7 @@ class SignupPage extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.032,
                 ),
-                const LginTextField(
+                const LoginTextField(
                   textName: "Password",
                   iconName: Icon(
                     Icons.lock_outline,
@@ -94,7 +94,7 @@ class SignupPage extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.032,
                 ),
-                const LginTextField(
+                const LoginTextField(
                   textName: "Confirm password",
                   iconName: Icon(
                     Icons.lock_outline,

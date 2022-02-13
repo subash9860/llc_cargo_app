@@ -47,7 +47,7 @@ class LoginPage extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.04,
                 ),
                 Image.asset('assets/loginScreenImage.png'),
-                const LginTextField(
+                const LoginTextField(
                   textName: "Email",
                   iconName: Icon(
                     Icons.email_outlined,
@@ -58,7 +58,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.04,
                 ),
-                const LginTextField(
+                const LoginTextField(
                   textName: "Password",
                   iconName: Icon(
                     Icons.lock_outline,
