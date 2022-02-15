@@ -16,33 +16,27 @@ class DimensionForGoods extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 77,
+      height: 74,
       width: width,
       decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14.0),
-        side: const BorderSide(color: Colors.black, width: 3.2),
+        side: const BorderSide(color: Colors.black, width: 3),
       )),
       child: Column(
         children: [
           Text(
             topName,
-            softWrap: true,
-            textDirection: TextDirection.ltr,
-            textAlign: TextAlign.justify,
             style: const TextStyle(
-              fontSize: 19,
+              fontSize: 17,
               fontWeight: FontWeight.w600,
-              overflow: TextOverflow.fade,
             ),
           ),
           TextField(
+            textAlign: TextAlign.center,
             decoration: InputDecoration(
               hintText: hints.toString(),
               border: InputBorder.none,
-              icon: const Padding(
-                padding: EdgeInsets.only(left: 28, top: 25),
-              ),
             ),
           ),
         ],
