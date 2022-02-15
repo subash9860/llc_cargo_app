@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../widgets/dimension.dart';
 // import 'package:luxras_light_cargo/widgets/login_textfield.dart';
 
+enum DeliveryType { luggage, parcel }
+
 class BookTripScreen extends StatefulWidget {
   const BookTripScreen({Key? key}) : super(key: key);
 
@@ -12,6 +14,8 @@ class BookTripScreen extends StatefulWidget {
 }
 
 class _BookTripScreenState extends State<BookTripScreen> {
+  DeliveryType? _type = DeliveryType.luggage;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,111 +48,87 @@ class _BookTripScreenState extends State<BookTripScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Stack(
-                    children: [
-                      Card(
-                        color: const Color(0xFF171719),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(20),
-                            top: Radius.circular(20),
-                          ),
-                        ),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.20,
-                          width: MediaQuery.of(context).size.width * 0.40,
-                          child: Image.asset("./assets/parcel.png"),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Card(
-                          color:const Color.fromARGB(255, 219, 214, 214),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(50),
-                              top: Radius.circular(50),
-                            ),
-                          ),
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.045,
-                            width: MediaQuery.of(context).size.width * 0.080,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 3,
-                        right: 3,
-                        child: Card(
-                          color:const Color.fromARGB(255, 245, 242, 242),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(50),
-                              top: Radius.circular(50),
-                            ),
-                          ),
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.035,
-                            width: MediaQuery.of(context).size.width * 0.065,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  // section one
-                  Stack(
-                    children: [
-                      Card(
-                        color: const Color(0xFF171719),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(20),
-                            top: Radius.circular(20),
-                          ),
-                        ),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.20,
-                          width: MediaQuery.of(context).size.width * 0.40,
-                          child: Image.asset("./assets/parcel.png"),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Card(
-                          color: Colors.white70,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(50),
-                              top: Radius.circular(50),
-                            ),
-                          ),
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.045,
-                            width: MediaQuery.of(context).size.width * 0.080,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 3,
-                        right: 3,
-                        child: Card(
-                          color: Colors.deepOrange,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(50),
-                              top: Radius.circular(50),
-                            ),
-                          ),
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.035,
-                            width: MediaQuery.of(context).size.width * 0.065,
-                          ),
-                        ),
-                      )
-                    ],
-                  )
+                  // for Delivery type/luggage
+                  CardsForTrips(context, "./assets/luggage.png", "Luggage"),
+
+                  CardsForTrips(context, "./assets/parcel.png", "Parcel"),
+
+
+                  // for delivery type / parcel
+
+                  // Stack(
+                  //   children: [
+                  //     Card(
+                  //       color: const Color(0xFF171719),
+                  //       shape: const RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.vertical(
+                  //           bottom: Radius.circular(20),
+                  //           top: Radius.circular(20),
+                  //         ),
+                  //       ),
+                  //       child: SizedBox(
+                  //         height: MediaQuery.of(context).size.height * 0.20,
+                  //         width: MediaQuery.of(context).size.width * 0.40,
+                  //       ),
+                  //     ),
+                  //     Positioned(
+                  //       top: 20,
+                  //       child: Image.asset(
+                  //         "./assets/parcel.png",
+                  //         fit: BoxFit.contain,
+                  //         height: MediaQuery.of(context).size.height * 0.12,
+                  //         width: MediaQuery.of(context).size.width * 0.40,
+                  //       ),
+                  //     ),
+                  //     const Positioned(
+                  //         bottom: 15,
+                  //         left: 42,
+                  //         child: Text(
+                  //           "Parcel",
+                  //           style: TextStyle(
+                  //               color: Colors.white70,
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 24),
+                  //         )),
+                  //     Positioned(
+                  //       bottom: 3,
+                  //       right: 3,
+                  //       child: Card(
+                  //         color: const Color.fromARGB(255, 245, 242, 242),
+                  //         shape: const RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.vertical(
+                  //             bottom: Radius.circular(50),
+                  //             top: Radius.circular(50),
+                  //           ),
+                  //         ),
+                  //         child: SizedBox(
+                  //           height: MediaQuery.of(context).size.height * 0.040,
+                  //           width: MediaQuery.of(context).size.width * 0.075,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     // adding Radio button
+                  //     Positioned(
+                  //       bottom: -3,
+                  //       right: -3,
+                  //       child: Transform.scale(
+                  //         scale: 2,
+                  //         child: Radio(
+                  //           value: DeliveryType.parcel,
+                  //           groupValue: _type,
+                  //           onChanged: (DeliveryType? val) {
+                  //             setState(() {
+                  //               _type = val;
+                  //             });
+                  //           },
+                  //           fillColor: MaterialStateColor.resolveWith(
+                  //               (states) => Colors.deepOrange),
+                  //           toggleable: true,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
 
@@ -180,11 +160,89 @@ class _BookTripScreenState extends State<BookTripScreen> {
                   DimensionForGoods(
                       hints: 40.00, topName: "Weight (kg)", width: 165),
                 ],
-              )
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Stack CardsForTrips(BuildContext context, String imageName, String cardName ) {
+    return Stack(
+                  children: [
+                    Card(
+                      color: const Color(0xFF171719),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(20),
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.20,
+                        width: MediaQuery.of(context).size.width * 0.40,
+                      ),
+                    ),
+                    Positioned(
+                      top: 15,
+                      child: Image.asset(
+                        imageName,
+                        // "./assets/luggage.png",
+                        fit: BoxFit.contain,
+                        height: MediaQuery.of(context).size.height * 0.13,
+                        width: MediaQuery.of(context).size.width * 0.40,
+                      ),
+                    ),
+                     Positioned(
+                        bottom: 15,
+                        left: 25,
+                        child: Text(
+                          cardName,
+                          // "Luggage",
+                          style:const TextStyle(
+                              color: Colors.white70,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24),
+                        )),
+                    Positioned(
+                      bottom: 3,
+                      right: 3,
+                      child: Card(
+                        color: const Color.fromARGB(255, 245, 242, 242),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(50),
+                            top: Radius.circular(50),
+                          ),
+                        ),
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.040,
+                          width: MediaQuery.of(context).size.width * 0.075,
+                        ),
+                      ),
+                    ),
+                    // adding Radio button
+                    Positioned(
+                      bottom: -3,
+                      right: -3,
+                      child: Transform.scale(
+                        scale: 2,
+                        child: Radio(
+                          value: DeliveryType.luggage,
+                          groupValue: _type,
+                          onChanged: (DeliveryType? val) {
+                            setState(() {
+                              _type = val;
+                            });
+                          },
+                          fillColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.deepOrange),
+                          toggleable: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
   }
 }

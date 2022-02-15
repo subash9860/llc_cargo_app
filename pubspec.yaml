@@ -70,10 +70,17 @@ flutter:
     - assets/van.png
     - assets/pp.jpg
     - assets/parcel.png
+    - assets/luggage.png
     - assets/onboarding/onboarding0.png
     - assets/onboarding/onboarding1.png
     - assets/onboarding/onboarding2.png
     - assets/onboarding/onboarding3.png
+
+# for transportation modes
+    - assets/transport/air.png
+    - assets/transport/rail.png
+    - assets/transport/road.png
+    - assets/transport/water.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
