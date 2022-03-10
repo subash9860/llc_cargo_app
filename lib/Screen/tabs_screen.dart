@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luxras_light_cargo/Screen/book_trip_screen.dart';
+import '../Screen/book_trip_screen.dart';
 
 import './account_screen.dart';
 import './home_screen.dart';

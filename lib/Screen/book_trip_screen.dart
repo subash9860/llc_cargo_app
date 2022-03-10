@@ -3,7 +3,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:luxras_light_cargo/widgets/button_customized.dart';
+import '../widgets/button_customized.dart';
 import '../widgets/dimension.dart';
 // import 'package:luxras_light_cargo/widgets/login_textfield.dart';
 

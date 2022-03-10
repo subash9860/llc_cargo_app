@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'package:provider/provider.dart'; // Provider
+
 import './Screen/splash_screen.dart';
 
 void main() {
@@ -25,11 +30,11 @@ class MyApp extends StatelessWidget {
           //  textTheme: Colors.black,
           foregroundColor: Colors.deepOrange,
           backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(10),
-              ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(10),
             ),
+          ),
         ),
         //colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
       ),

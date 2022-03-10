@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "641814034599",
+    "project_id": "cargo-510e2",
+    "storage_bucket": "cargo-510e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641814034599:android:c7bf5c017910705f7e8382",
+        "android_client_info": {
+          "package_name": "com.example.llc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641814034599-p2llpl8rvco51nhf9f2gn9sj7tagtiqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO9RUBtBOi8jMN0WnzVijr2pSwLzEPskk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641814034599-p2llpl8rvco51nhf9f2gn9sj7tagtiqt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "641814034599-rdg7aurm647dr44hhl8lssp9mabp2gqv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.llc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
