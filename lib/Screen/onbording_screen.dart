@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import './login_screen.dart';
 import '../widgets/button_customized.dart';
-import './signup_screen.dart';
+// import './signup_screen.dart';
 import '../utils/onbording_content.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void getStartedfun(BuildContext context) {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => const SignupPage()));
+        context, MaterialPageRoute(builder: (_) => const LoginPage()));
   }
 
   void nextButtonFun() {
