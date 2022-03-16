@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import './onbording_screen.dart';
@@ -42,7 +41,6 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
       ),
-      // )
     );
   }
 }

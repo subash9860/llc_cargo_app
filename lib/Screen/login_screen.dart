@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
+import '../models/user_auth.dart';
 import '../widgets/button_customized.dart';
-import './tabs_screen.dart';
 import './signup_screen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,24 +16,21 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 // form key
   final _formKey = GlobalKey<FormState>();
-
   // text field state
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  final _auth = FirebaseAuth.instance;
-
-  void loginFunc(BuildContext context) {
-    // Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (_) => const TabScreen(),
-    //     ));
-    signIn(_emailController.text, _passwordController.text);
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final userAuth = Provider.of<UserAuth>(context, listen: false);
+
     // email text field
     final emailField = TextFormField(
       keyboardType: TextInputType.emailAddress,
@@ -65,10 +61,6 @@ class _LoginPageState extends State<LoginPage> {
         return null;
       },
       textInputAction: TextInputAction.next,
-      // onSaved: (value) {
-      //   // do something with value
-
-      // },
     );
     // password text field
     final passwordField = TextFormField(
@@ -111,10 +103,6 @@ class _LoginPageState extends State<LoginPage> {
         return null;
       },
       textInputAction: TextInputAction.done,
-      // onSaved: (value) {
-      //   // do something with value
-
-      // },
     );
 
     return Scaffold(
@@ -174,11 +162,8 @@ class _LoginPageState extends State<LoginPage> {
                       buttonpress: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          print(_emailController.text);
-                          print(_passwordController.text);
-                          // _emailController.clear();
-                          // _passwordController.clear();
-                          loginFunc(context);
+                          userAuth.login(context, _emailController.text,
+                              _passwordController.text);
                         }
                       },
                       textColor: Colors.white,
@@ -222,49 +207,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-// login function
-  void signIn(String email, String password) async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      try {
-        await _auth
-            .signInWithEmailAndPassword(email: email, password: password)
-            .then((uid) => {
-              
-                  print(uid),
-                  Fluttertoast.showToast(
-                      msg: "Login Successful",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0),
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const TabScreen(),
-                        // user: User(
-                        //   uid: uid.user!.uid,
-                        //   email: uid.user!.email,
-                        //   displayName: uid.user!.displayName,
-                        //   // photoUrl: uid.user!.photoUrl,
-                        // ),
-                      ))
-                });
-      } catch (e) {
-        Fluttertoast.showToast(
-            msg: "Login Failed $e",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        print(e);
-      }
-    }
   }
 }

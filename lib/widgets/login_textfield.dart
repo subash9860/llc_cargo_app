@@ -12,7 +12,7 @@ class LoginTextField extends StatefulWidget {
 }
 
 class _LoginTextFieldState extends State<LoginTextField> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(

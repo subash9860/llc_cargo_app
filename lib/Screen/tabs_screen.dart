@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../Screen/book_trip_screen.dart';
 
-import './account_screen.dart';
+import '../Screen/book_trip_screen.dart';
+import './user_profile.dart';
 import './home_screen.dart';
 import './inbox_screen.dart';
 import './trip_screen.dart';
@@ -50,7 +50,7 @@ class _TabScreenState extends State<TabScreen> {
         )
       },
       {
-        'page': const AccountScreen(),
+        'page': const UserProfile(),
         'title': const Text(
           'Profile',
           style: TextStyle(

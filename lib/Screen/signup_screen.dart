@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
-
-import '../models/user_model.dart';
-
-import './tabs_screen.dart';
-// import '../models/user.dart';
-
+import '../models/user_auth.dart';
 import '../widgets/button_customized.dart';
-// import '../widgets/login_textfield.dart';
 import './login_screen.dart';
 
 class SignupPage extends StatefulWidget {
@@ -33,94 +23,20 @@ class _SignupPageState extends State<SignupPage> {
   final _passwordController = TextEditingController();
   final _passwordConfirmController = TextEditingController();
 
-  final _auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  void signupFunc(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      _auth
-          .createUserWithEmailAndPassword(
-              email: _emailController.text, password: _passwordController.text)
-          .then(
-            (user) => firestore
-                .collection('users')
-                .doc(user.user!.uid)
-                .set(
-                  {
-                    'uid': user.user!.uid,
-                    'email': _emailController.text,
-                    'name': _nameController.text,
-                    'phoneNumber': _phoneNumberController.text,
-                    'password': _passwordController.text,
-                  },
-                  
-                  //   uid: user.user!.uid,
-                  //   email: _emailController.text,
-                  //   name: _nameController.text,
-                  //   password: _passwordController.text,
-                  //   phoneNumber: int.parse(_phoneNumberController.text),
-                  // ).toJson(),
-                )
-                .then(
-                  (value) => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const TabScreen(),
-                    ),
-                  ),
-                )
-                .catchError(
-                  (error) => Fluttertoast.showToast(
-                      msg: error.toString(),
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0),
-                ),
-          );
-      // );
-
-      // .then((user) => firestore.collection('users').document(user.uid).setData({
-      //   'name': _nameController.text,
-      //   'email': _emailController.text,
-      //   'phoneNumber': _phoneNumberController.text,
-      //   'password': _passwordController.text,
-      //   'uid': user.uid,
-      // })).then((value) => Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (_) => const TabsScreen(),
-      //     )));
-    }
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneNumberController.dispose();
+    _passwordController.dispose();
+    _passwordConfirmController.dispose();
+    super.dispose();
   }
-
-  //         .then((user) {
-  //       Firestore.instance.collection('users').document(user.user!.uid).setData({
-  //         'name': _nameController.text,
-  //         'email': _emailController.text,
-  //         'phoneNumber': _phoneNumberController.text,
-  //         'password': _passwordController.text,
-  //         'uid': user.user.uid,
-  //       });
-  //       Navigator.pushReplacement(
-  //           context, MaterialPageRoute(builder: (context) => TabsScreen()));
-  //     }).catchError((error) {
-  //       print(error);
-  //     });
-  //   }
-
-  //   Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (_) => const LoginPage(),
-  //       ));
-  // }
 
   @override
   Widget build(BuildContext context) {
+    final userAuth = Provider.of<UserAuth>(context, listen: false);
+
 // name text field
     final nameField = TextFormField(
       controller: _nameController,
@@ -145,10 +61,6 @@ class _SignupPageState extends State<SignupPage> {
         return null;
       },
       textInputAction: TextInputAction.next,
-      // onSaved: (value) {
-      //   // do something with value
-
-      // },
     );
 
     // email text field
@@ -181,10 +93,6 @@ class _SignupPageState extends State<SignupPage> {
         return null;
       },
       textInputAction: TextInputAction.next,
-      // onSaved: (value) {
-      //   // do something with value
-
-      // },
     );
     // password text field
     final phoneNumberField = TextFormField(
@@ -212,16 +120,9 @@ class _SignupPageState extends State<SignupPage> {
         if (value.length != 10) {
           return 'phone number should be of 10 digits';
         }
-        // if (value.startsWith(98)) {
-        //   return 'Enter phone number of Nepal';
-        // }
         return null;
       },
       textInputAction: TextInputAction.done,
-      // onSaved: (value) {
-      //   // do something with value
-
-      // },
     );
 
     // password text field
@@ -265,10 +166,6 @@ class _SignupPageState extends State<SignupPage> {
         return null;
       },
       textInputAction: TextInputAction.done,
-      // onSaved: (value) {
-      //   // do something with value
-
-      // },
     );
 
     // email text field
@@ -299,10 +196,6 @@ class _SignupPageState extends State<SignupPage> {
         return null;
       },
       textInputAction: TextInputAction.next,
-      // onSaved: (value) {
-      //   // do something with value
-
-      // },
     );
 
     return Scaffold(
@@ -346,22 +239,15 @@ class _SignupPageState extends State<SignupPage> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     butttonText: "Sign up",
                     buttonColor: Theme.of(context).colorScheme.primary,
-                    buttonpress:
-                        //  () => signupFunc(context),
-                        () {
+                    buttonpress: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        print(_nameController.text);
-                        print(_emailController.text);
-                        print(_phoneNumberController.text);
-                        print(_passwordController.text);
-                        print(_passwordConfirmController.text);
-                        // _nameController.clear();
-                        // _emailController.clear();
-                        // _phoneNumberController.clear();
-                        // _passwordController.clear();
-                        // _passwordConfirmController.clear();
-                        signupFunc(context);
+                        userAuth.signUp(
+                            context,
+                            _emailController.text,
+                            _passwordController.text,
+                            _nameController.text,
+                            _phoneNumberController.text);
                       }
                     },
                     textColor: Colors.white,
@@ -408,26 +294,4 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
   }
-
-  // void signup(String email, String password) {
-  //   FirebaseAuth.instance
-  //       .createUserWithEmailAndPassword(email: email, password: password)
-  //       .then((user) {
-  //     postDetailsToFirestore();
-  //     print("signed up");
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (_) => const TabScreen()));
-  //   }).catchError((e) {
-  //     print(e);
-  //   });
-  // }
-
-  // postDetailsToFirestore() async {
-  // call the function to get the user details
-  // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-
-  // UserData? user = _auth.currentUser;
-
-  // User userdmodel = User(uid: uid, email: email, name: name)
-  // }
 }
