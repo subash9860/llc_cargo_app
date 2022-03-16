@@ -232,13 +232,14 @@ class _LoginPageState extends State<LoginPage> {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
+              
                   print(uid),
                   Fluttertoast.showToast(
                       msg: "Login Successful",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.BOTTOM,
                       timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black,
+                      backgroundColor: Colors.red,
                       textColor: Colors.white,
                       fontSize: 16.0),
                   Navigator.pushReplacement(
@@ -259,7 +260,7 @@ class _LoginPageState extends State<LoginPage> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0);
         print(e);

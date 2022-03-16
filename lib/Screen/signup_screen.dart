@@ -1,9 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:llc/Screen/tabs_screen.dart';
-import 'package:llc/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+
+import '../models/user_model.dart';
+
+import './tabs_screen.dart';
+// import '../models/user.dart';
 
 import '../widgets/button_customized.dart';
 // import '../widgets/login_textfield.dart';
@@ -27,15 +33,91 @@ class _SignupPageState extends State<SignupPage> {
   final _passwordController = TextEditingController();
   final _passwordConfirmController = TextEditingController();
 
-   final _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void signupFunc(BuildContext context) {
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const LoginPage(),
-        ));
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      _auth
+          .createUserWithEmailAndPassword(
+              email: _emailController.text, password: _passwordController.text)
+          .then(
+            (user) => firestore
+                .collection('users')
+                .doc(user.user!.uid)
+                .set(
+                  {
+                    'uid': user.user!.uid,
+                    'email': _emailController.text,
+                    'name': _nameController.text,
+                    'phoneNumber': _phoneNumberController.text,
+                    'password': _passwordController.text,
+                  },
+                  
+                  //   uid: user.user!.uid,
+                  //   email: _emailController.text,
+                  //   name: _nameController.text,
+                  //   password: _passwordController.text,
+                  //   phoneNumber: int.parse(_phoneNumberController.text),
+                  // ).toJson(),
+                )
+                .then(
+                  (value) => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const TabScreen(),
+                    ),
+                  ),
+                )
+                .catchError(
+                  (error) => Fluttertoast.showToast(
+                      msg: error.toString(),
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0),
+                ),
+          );
+      // );
+
+      // .then((user) => firestore.collection('users').document(user.uid).setData({
+      //   'name': _nameController.text,
+      //   'email': _emailController.text,
+      //   'phoneNumber': _phoneNumberController.text,
+      //   'password': _passwordController.text,
+      //   'uid': user.uid,
+      // })).then((value) => Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (_) => const TabsScreen(),
+      //     )));
+    }
   }
+
+  //         .then((user) {
+  //       Firestore.instance.collection('users').document(user.user!.uid).setData({
+  //         'name': _nameController.text,
+  //         'email': _emailController.text,
+  //         'phoneNumber': _phoneNumberController.text,
+  //         'password': _passwordController.text,
+  //         'uid': user.user.uid,
+  //       });
+  //       Navigator.pushReplacement(
+  //           context, MaterialPageRoute(builder: (context) => TabsScreen()));
+  //     }).catchError((error) {
+  //       print(error);
+  //     });
+  //   }
+
+  //   Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (_) => const LoginPage(),
+  //       ));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +173,11 @@ class _SignupPageState extends State<SignupPage> {
         if (value!.isEmpty) {
           return 'Please enter an email address';
         }
+        if (!RegExp(
+                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(value)) {
+          return 'Please enter a valid email address';
+        }
         return null;
       },
       textInputAction: TextInputAction.next,
@@ -122,6 +209,12 @@ class _SignupPageState extends State<SignupPage> {
         if (value!.isEmpty) {
           return 'Please enter a phone number';
         }
+        if (value.length != 10) {
+          return 'phone number should be of 10 digits';
+        }
+        // if (value.startsWith(98)) {
+        //   return 'Enter phone number of Nepal';
+        // }
         return null;
       },
       textInputAction: TextInputAction.done,
@@ -153,6 +246,22 @@ class _SignupPageState extends State<SignupPage> {
         if (value!.isEmpty) {
           return 'Please enter a password';
         }
+        if (!RegExp(
+                r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")
+            .hasMatch(value)) {
+          return 'Please enter a valid password';
+        }
+        if (value.length < 8) {
+          return 'Password must be at least 8 characters';
+        }
+        if (value.length > 20) {
+          return 'Password must be less than 20 characters';
+        }
+        if (!RegExp(
+                r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")
+            .hasMatch(value)) {
+          return 'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character';
+        }
         return null;
       },
       textInputAction: TextInputAction.done,
@@ -183,6 +292,9 @@ class _SignupPageState extends State<SignupPage> {
       validator: (value) {
         if (value!.isEmpty) {
           return 'Please enter an password again';
+        }
+        if (value != _passwordController.text) {
+          return 'Password does not match';
         }
         return null;
       },
@@ -244,11 +356,11 @@ class _SignupPageState extends State<SignupPage> {
                         print(_phoneNumberController.text);
                         print(_passwordController.text);
                         print(_passwordConfirmController.text);
-                        _nameController.clear();
-                        _emailController.clear();
-                        _phoneNumberController.clear();
-                        _passwordController.clear();
-                        _passwordConfirmController.clear();
+                        // _nameController.clear();
+                        // _emailController.clear();
+                        // _phoneNumberController.clear();
+                        // _passwordController.clear();
+                        // _passwordConfirmController.clear();
                         signupFunc(context);
                       }
                     },
@@ -297,27 +409,25 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  void signup(String email, String password) {
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password)
-        .then((user) {
-      postDetailsToFirestore();
-      print("signed up");
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const TabScreen()));
-    }).catchError((e) {
-      print(e);
-    });
-  }
+  // void signup(String email, String password) {
+  //   FirebaseAuth.instance
+  //       .createUserWithEmailAndPassword(email: email, password: password)
+  //       .then((user) {
+  //     postDetailsToFirestore();
+  //     print("signed up");
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (_) => const TabScreen()));
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
 
-  postDetailsToFirestore() async {
-    // call the function to get the user details
-    FirebaseFirestore firebaseFirestore= FirebaseFirestore.instance;
+  // postDetailsToFirestore() async {
+  // call the function to get the user details
+  // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
-    // UserData? user = _auth.currentUser;
+  // UserData? user = _auth.currentUser;
 
-    // User userdmodel = User(uid: uid, email: email, name: name)
-
-    
-  }
+  // User userdmodel = User(uid: uid, email: email, name: name)
+  // }
 }
