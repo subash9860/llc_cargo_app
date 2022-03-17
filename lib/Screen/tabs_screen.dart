@@ -76,7 +76,10 @@ class _TabScreenState extends State<TabScreen> {
       appBar: AppBar(
         leadingWidth: 90,
         title: _page[_pageIndex]['title'],
-        leading: Image.asset('assets/appbar1.png'),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset('assets/appbar1.png'),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,

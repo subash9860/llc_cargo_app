@@ -33,22 +33,12 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepOrange)
               .copyWith(secondary: Colors.black),
           primaryColor: Colors.deepOrange,
-          // accentColor : Colors.white,
           appBarTheme: const AppBarTheme(
-            elevation: 2,
-            // toolbarHeight: 70,
+            elevation: 1,
             centerTitle: true,
-            // color: Colors.black,
-            //  textTheme: Colors.black,
+            color: Colors.white,
             foregroundColor: Colors.deepOrange,
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(10),
-              ),
-            ),
           ),
-          //colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
         ),
         title: 'Luxras Light Cargo',
         home: const SplashScreen(),
