@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:llc/Screen/book_trip_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import '../models/user_data.dart';
+import '../Screen/book_trip_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({ Key? key }) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Provider.of<UserData>(context, listen: false).getUserData();

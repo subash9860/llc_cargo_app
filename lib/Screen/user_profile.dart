@@ -40,7 +40,7 @@ class UserProfile extends StatelessWidget {
         ),
         Consumer<UserData>(
           builder: (context, value, child) => Text(
-            value.items?.displayName ?? "",
+            value.items?.displayName.toUpperCase() ?? "",
             style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
         ),
