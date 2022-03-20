@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:llc/Screen/location_screen.dart';
 
 import '../widgets/button_customized.dart';
 // import '../widgets/dimension.dart';
@@ -72,16 +73,16 @@ class _BookTripScreenState extends State<BookTripScreen> {
     final weightFeild = textField(
         context: context,
         controller: _weightController,
-        hint: "Weight",
-        label: "weight of the parcel",
+        label: "weight",
+        hint: "Weight of the parcel",
         icon: Icons.balance,
         keyboardType: TextInputType.number);
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 1,
+        elevation: 0,
         title: const Text(
-          "Book a new Trip",
+          "New Trip",
           style: TextStyle(
               color: Colors.deepOrange,
               fontSize: 28,
@@ -106,7 +107,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
                 children: [
                   cardWidegt(
                     imageUrl: "./assets/luggage.png",
-                    title: 'Luggae',
+                    title: 'Luggage',
                     child: Radio<DeliveryType>(
                       value: DeliveryType.luggage,
                       groupValue: _type,
@@ -221,7 +222,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
                 children: [
                   cardWidegt(
                     imageUrl: "./assets/transport/road.png",
-                    title: 'RoadWays',
+                    title: 'Roadways',
                     child: Radio<TransportationMode>(
                       value: TransportationMode.roadway,
                       groupValue: _mode,
@@ -237,7 +238,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
                   ),
                   cardWidegt(
                     imageUrl: "./assets/transport/water.png",
-                    title: 'WaterWays',
+                    title: 'Waterways',
                     child: Radio<TransportationMode>(
                       value: TransportationMode.waterway,
                       groupValue: _mode,
@@ -255,18 +256,36 @@ class _BookTripScreenState extends State<BookTripScreen> {
               ),
               const SizedBox(height: 10),
               ButtonCustomized(
-                butttonText: "continuous",
+                butttonText: "Continue",
                 buttonpress: () {
                   if (_formKey.currentState!.validate() &&
                       _type != null &&
                       _mode != null) {
                     _formKey.currentState!.save();
-                    print(_lengthController.text);
-                    print(_widthController.text);
-                    print(_weightController.text);
-                    print(_heightController.text);
-                    print(_type.toString());
-                    print(_mode.toString());
+                    print("Delivery Type: " + _type.toString());
+                    print("length: " + _lengthController.text);
+                    print("width: " + _widthController.text);
+                    print("height: " + _heightController.text);
+                    print("Quantity: " + _quantityController.text);
+                    print("weight: " + _weightController.text);
+                    print("Transport mode: " + _mode.toString());
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LocationScreen(),
+
+                        // DeliveryDetails(
+                        //   type: _type,
+                        //   length: _lengthController.text,
+                        //   width: _widthController.text,
+                        //   height: _heightController.text,
+                        //   quantity: _quantityController.text,
+                        //   weight: _weightController.text,
+                        //   mode: _mode,
+                        // ),
+                      ),
+                    );
                   }
                 },
                 buttonColor: Colors.deepOrange,
@@ -291,42 +310,80 @@ class _BookTripScreenState extends State<BookTripScreen> {
       height: 110,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.black54,
+        color: const Color(0xFF171719),
       ),
       child: Stack(
         children: [
-          Positioned(
-            left: 35,
-            child: Image.asset(
-              // "./assets/luggage.png",
-              imageUrl,
-              fit: BoxFit.scaleDown,
-              width: 90,
-            ),
-          ),
           Positioned(
             bottom: -3,
             right: -3,
             child: CircleAvatar(
               backgroundColor: Colors.white,
+              radius: 18,
               child: Transform.scale(
                 scale: 2,
                 child: child,
               ),
             ),
           ),
-          Positioned(
-            bottom: 0,
-            left: 5,
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+          if (title != 'Parcel')
+            Positioned(
+              bottom: 0,
+              left: 30,
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          )
+          if (title == 'Parcel')
+            Positioned(
+              bottom: 0,
+              left: 45,
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          if (title == 'Luggage')
+            Positioned(
+              top: -20,
+              left: 35,
+              child: Image.asset(
+                imageUrl,
+                fit: BoxFit.scaleDown,
+                width: 90,
+              ),
+            ),
+          if (title == 'Parcel')
+            Positioned(
+              top: 10,
+              left: 35,
+              child: Image.asset(
+                imageUrl,
+                fit: BoxFit.scaleDown,
+                width: 90,
+              ),
+            ),
+          if (title.contains("ways"))
+            Positioned(
+              top: 10,
+              left: 35,
+              child: Image.asset(
+                imageUrl,
+                fit: BoxFit.scaleDown,
+                width: 90,
+              ),
+            ),
         ],
       ),
     );
@@ -357,9 +414,6 @@ class _BookTripScreenState extends State<BookTripScreen> {
           ),
         ),
       ),
-      onEditingComplete: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
       validator: (value) {
         if (value!.isEmpty) {
           return 'Please enter a length';

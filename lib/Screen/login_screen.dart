@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:llc/Screen/tabs_screen.dart';
-
 import 'package:provider/provider.dart';
 
 import '../models/user_auth.dart';
@@ -161,15 +159,11 @@ class _LoginPageState extends State<LoginPage> {
                       butttonText: "Login",
                       buttonColor: Theme.of(context).colorScheme.primary,
                       buttonpress: () {
-                        
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: ((context) => const TabScreen())));
-
-                        // if (_formKey.currentState!.validate()) {
-                        //   _formKey.currentState!.save();
-                        //   userAuth.login(context, _emailController.text,
-                        //       _passwordController.text);
-                        // }
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          userAuth.login(context, _emailController.text,
+                              _passwordController.text);
+                        }
                       },
                       textColor: Colors.white,
                     ),
