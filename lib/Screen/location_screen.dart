@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geocoding/geocoding.dart';
-
 import 'package:geolocator/geolocator.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -14,6 +13,8 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  bool keyboarTyping = false;
+
   bool starting = true;
   LatLng startingPoint = LatLng(27.6710, 85.4298);
   LatLng destinationPoint = LatLng(27.667246, 85.436371);
@@ -76,12 +77,6 @@ class _LocationScreenState extends State<LocationScreen> {
               color: Colors.deepOrange),
         ),
       ),
-      floatingActionButton: IconButton(
-        icon: const Icon(Icons.my_location),
-        onPressed: () {
-          _getCurrentLocation();
-        },
-      ),
       body: Form(
         key: _formKey,
         child: Column(
@@ -124,91 +119,144 @@ class _LocationScreenState extends State<LocationScreen> {
                 const SizedBox(width: 10),
               ],
             ),
-            Expanded(
-              child: Stack(
-                children: [
-                  FlutterMap(
-                    options: MapOptions(
-                      center: startingPoint,
-                      zoom: 15,
-                      // change postion of marker point where we tap on map
-                      onTap: (tapPosition, pointT) {
-                        // change lat long to place name
+            // AnimatedSwitcher(
+              // duration: const Duration(milliseconds: 500),
+              // transitionBuilder: (Widget child, Animation<double> animation) {
+                // return ScaleTransition(child: child, scale: animation);
+              // },
+              // child:
+                  // starting
+                  // ? const Text("Tap on the map to select your location")
+                  // : const Text("Tap on the map to select your destination"),
+                  // ),
+                  // },
+                  // child: starting ? _map() : _map2()),
 
-                        locationFromAddress("bhaktapur multiple campus")
-                            .then((value) {
-                          if (value.isEmpty) {
-                            print("no palce found");
-                          } else {
-                            print(value[0].toString());
-                          }
-                        });
+                  (keyboarTyping)
+                      ? const SizedBox(
+                          height: 10,
+                          child: Text("keybord typing is on"),
+                        )
+                      :
+                       Expanded(
+                          child: 
+                          Stack(
+                            children: [
+                              FlutterMap(
+                                options: MapOptions(
+                                  center: startingPoint,
+                                  zoom: 15,
+                                  // change postion of marker point where we tap on map
+                                  onTap: (tapPosition, pointT) {
+                                    // change lat long to place name
 
-                        // placemarkFromCoordinates(27.6710, 85.4298).then(
-                        //   (value) {
-                        //     if (value.isEmpty) {
-                        //       print("No results found");
-                        //     } else {
-                        //       print(value[0].toString());
-                        //     }
-                        //     setState(() {
-                        //       (starting)
-                        //           ? startingPoint = pointT
-                        //           : destinationPoint = pointT;
-                        //       print(starting);
-                        //       print(tapPosition.relative?.distance);
-                        //       print(pointT);
-                        //     });
-                        //   },
-                        // );
-                      },
-                    ), // set the map's center
-                    layers: [
-                      TileLayerOptions(
-                        urlTemplate:
-                            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                        subdomains: ['a', 'b', 'c'],
-                      ), // add a tile layer
-                      MarkerLayerOptions(
-                        markers: [
-                          Marker(
-                            width: 80.0,
-                            height: 80.0,
-                            point: startingPoint,
-                            builder: (ctx) => IconButton(
-                              icon: const Icon(Icons.location_on),
-                              color: Colors.deepOrange,
-                              iconSize: 45.0,
-                              onPressed: () {
-                                setState(() {
-                                  starting = !starting;
-                                });
-                              },
-                              tooltip: "Starting Point",
-                            ),
+                                    locationFromAddress(
+                                            "bhaktapur multiple campus")
+                                        .then((value) {
+                                      if (value.isEmpty) {
+                                        print("no palce found");
+                                      } else {
+                                        print(value[0].toString());
+                                      }
+                                    });
+
+                                    // placemarkFromCoordinates(27.6710, 85.4298).then(
+                                    //   (value) {
+                                    //     if (value.isEmpty) {
+                                    //       print("No results found");
+                                    //     } else {
+                                    //       print(value[0].toString());
+                                    //     }
+                                    //     setState(() {
+                                    //       (starting)
+                                    //           ? startingPoint = pointT
+                                    //           : destinationPoint = pointT;
+                                    //       print(starting);
+                                    //       print(tapPosition.relative?.distance);
+                                    //       print(pointT);
+                                    //     });
+                                    //   },
+                                    // );
+                                  },
+                                ), // set the map's center
+                                layers: [
+                                  TileLayerOptions(
+                                    urlTemplate:
+                                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                    subdomains: ['a', 'b', 'c'],
+                                  ), // add a tile layer
+                                  MarkerLayerOptions(
+                                    markers: [
+                                      Marker(
+                                        width: 80.0,
+                                        height: 80.0,
+                                        point: startingPoint,
+                                        builder: (ctx) => IconButton(
+                                          icon: const Icon(Icons.location_on),
+                                          color: Colors.deepOrange,
+                                          iconSize: 45.0,
+                                          onPressed: () {
+                                            setState(() {
+                                              starting = !starting;
+                                            });
+                                          },
+                                          tooltip: "Starting Point",
+                                        ),
+                                      ),
+                                      Marker(
+                                        width: 80.0,
+                                        height: 80.0,
+                                        point: destinationPoint,
+                                        builder: (ctx) => IconButton(
+                                          icon: const Icon(Icons.location_on),
+                                          color: const Color(0xFF00E676),
+                                          iconSize: 45.0,
+                                          onPressed: () {
+                                            setState(() {
+                                              starting = !starting;
+                                            });
+                                          },
+                                          tooltip: "Destination",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Positioned(
+                                right: 20,
+                                bottom: 80,
+                                child: FloatingActionButton(
+                                  onPressed: _getCurrentLocation,
+                                  child: const Icon(Icons.my_location),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 15,
+                                left: 30,
+                                child: TextButton(
+                                  onPressed: () {
+                                    // submiting the data to the server
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 300,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.black,
+                                    ),
+                                    child: const Text(
+                                      "Done",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 30, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          Marker(
-                            width: 80.0,
-                            height: 80.0,
-                            point: destinationPoint,
-                            builder: (ctx) => IconButton(
-                              icon: const Icon(Icons.location_on),
-                              color: const Color(0xFF00E676),
-                              iconSize: 45.0,
-                              onPressed: () {
-                                setState(() {
-                                  starting = !starting;
-                                });
-                              },
-                              tooltip: "Destination",
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                        // ),
             ),
           ],
         ),
@@ -222,6 +270,11 @@ class _LocationScreenState extends State<LocationScreen> {
     controller,
   }) {
     return TextFormField(
+      onTap: () {
+        setState(() {
+          keyboarTyping = true;
+        });
+      },
       keyboardType: TextInputType.streetAddress,
       controller: controller,
       textInputAction: TextInputAction.next,
