@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:llc/Screen/receiver_info_page.dart';
+
+import './receiver_info_page.dart';
+import '../models/form_model.dart';
+import '../provider/form_data.dart';
 
 class LocationScreen extends StatefulWidget {
-  const LocationScreen({Key? key}) : super(key: key);
+  final FormModel frmmodel;
+  const LocationScreen({Key? key, required this.frmmodel}) : super(key: key);
 
   @override
   State<LocationScreen> createState() => _LocationScreenState();
@@ -42,15 +47,7 @@ class _LocationScreenState extends State<LocationScreen> {
             } else {
               print(value[0].toString());
             }
-
             _satrtingTextController.text = value[0].toString();
-
-            // setState(() {
-            // (starting) ? startingPoint = pointT : destinationPoint = pointT;
-            // print(starting);
-            // print(tapPosition.relative?.distance);
-            // print(pointT);
-            // });
           },
         );
       });
@@ -79,26 +76,14 @@ class _LocationScreenState extends State<LocationScreen> {
         });
       },
     );
-
-    // List<Placemark> placemark =
-    //     await Geocoder.local.findAddressesFromQuery(address);
-    // // if no address found
-    // if (placemark.isEmpty) {
-    //   print("No results found");
-    // } else {
-    //   print(placemark[0].toString());
-    //   setState(() {
-    //     destinationPoint = LatLng(
-    //         placemark[0].position.latitude, placemark[0].position.longitude);
-    //     _destinationTextController.text = placemark[0].toString();
-    //   });
-    // }
   }
 
   @override
   void initState() {
     super.initState();
     _getCurrentLocation();
+    Provider.of<FormDataModel>(context, listen: false)
+        .setItems(widget.frmmodel);
   }
 
   @override
@@ -129,72 +114,55 @@ class _LocationScreenState extends State<LocationScreen> {
                   size: 40,
                 ),
                 Expanded(
-                    child: TextFormField(
-                  onEditingComplete: () {
-                    setState(() {
-                      _findLatLongFromAddress(
-                          "starting", _destinationTextController.text);
-                      // keyboarTyping = false;
-                    });
-                  },
-                  // onEditingComplete: () => oncomplete(),
-                  //
-                  // () {
-                  // controller.selection = TextSelection.collapsed(
-                  // offset: controller.text.length);
-                  // FocusScope.of(context).unfocus();
-                  // },
-                  onTap: () {
-                    setState(() {
-                      keyboarTyping = true;
-                    });
-                  },
-                  keyboardType: TextInputType.streetAddress,
-                  controller: _satrtingTextController,
-                  textInputAction: TextInputAction.next,
-                  style: const TextStyle(color: Colors.white),
-                  cursorColor: Colors.white,
-                  decoration: InputDecoration(
-                    // icon: const Icon(Icons.location_on, size: 40),
-                    filled: true,
-                    fillColor: const Color(0xFF171719),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        width: 1,
-                        style: BorderStyle.none,
+                  child: TextFormField(
+                    onEditingComplete: () {
+                      setState(() {
+                        _findLatLongFromAddress(
+                            "starting", _destinationTextController.text);
+                      });
+                    },
+                    onTap: () {
+                      setState(() {
+                        keyboarTyping = true;
+                      });
+                    },
+                    keyboardType: TextInputType.streetAddress,
+                    controller: _satrtingTextController,
+                    textInputAction: TextInputAction.next,
+                    style: const TextStyle(color: Colors.white),
+                    cursorColor: Colors.white,
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.location_on, size: 40),
+                      filled: true,
+                      fillColor: const Color(0xFF171719),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 1,
+                          style: BorderStyle.none,
+                        ),
+                      ),
+                      hintText: "Starting address", //hint,
+                      hintStyle: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 20),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 1,
+                          style: BorderStyle.none,
+                        ),
                       ),
                     ),
-                    hintText: "Starting address", //hint,
-                    hintStyle: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 20),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        width: 1,
-                        style: BorderStyle.none,
-                      ),
-                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a address';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a address';
-                    }
-                    return null;
-                  },
-                )
-
-                    //  textField(
-                    //     context: context,
-                    //     controller: _satrtingTextController,
-                    //     hint: 'Enter a pick up adress',
-                    //     oncomplete: (value) {
-                    //       print(value);
-                    //     }),
-
-                    ),
+                ),
                 const SizedBox(width: 10),
               ],
             ),
@@ -209,94 +177,59 @@ class _LocationScreenState extends State<LocationScreen> {
                   size: 40,
                 ),
                 Expanded(
-                    child: TextFormField(
-                  onEditingComplete: () {
-                    setState(() {
-                      _findLatLongFromAddress(
-                          "destination", _destinationTextController.text);
-                      keyboarTyping = false;
-                    });
-                  },
-
-                  // _ ,
-                  //
-                  // () {
-                  // controller.selection = TextSelection.collapsed(
-                  // offset: controller.text.length);
-                  // FocusScope.of(context).unfocus();
-                  // },
-                  onTap: () {
-                    setState(() {
-                      keyboarTyping = true;
-                      // _findLatLongFromAddress(_destinationTextController.text);
-                    });
-                  },
-                  keyboardType: TextInputType.streetAddress,
-                  controller: _destinationTextController,
-                  textInputAction: TextInputAction.next,
-                  style: const TextStyle(color: Colors.white),
-                  cursorColor: Colors.white,
-                  decoration: InputDecoration(
-                    // icon: const Icon(Icons.location_on, size: 40),
-                    filled: true,
-                    fillColor: const Color(0xFF171719),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        width: 1,
-                        style: BorderStyle.none,
+                  child: TextFormField(
+                    onEditingComplete: () {
+                      setState(() {
+                        _findLatLongFromAddress(
+                            "destination", _destinationTextController.text);
+                        keyboarTyping = false;
+                      });
+                    },
+                    onTap: () {
+                      setState(() {
+                        keyboarTyping = true;
+                      });
+                    },
+                    keyboardType: TextInputType.streetAddress,
+                    controller: _destinationTextController,
+                    textInputAction: TextInputAction.next,
+                    style: const TextStyle(color: Colors.white),
+                    cursorColor: Colors.white,
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.location_on, size: 40),
+                      filled: true,
+                      fillColor: const Color(0xFF171719),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 1,
+                          style: BorderStyle.none,
+                        ),
+                      ),
+                      hintText: 'Where to drop off?', //'hint',
+                      hintStyle: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 20),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 1,
+                          style: BorderStyle.none,
+                        ),
                       ),
                     ),
-                    hintText: 'Where to drop off?', //'hint',
-                    hintStyle: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 20),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        width: 1,
-                        style: BorderStyle.none,
-                      ),
-                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a address';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a address';
-                    }
-                    return null;
-                  },
-                )
-
-                    //  textField(
-                    //   context: context,
-                    //   controller: _destinationTextController,
-                    //   hint: 'Where to drop off?',
-                    //   oncomplete:
-                    // _findLatLongFromAddress(
-                    //       _destinationTextController.text),
-                    //   // (value) {
-                    //   //   print(value);
-                    //   // }
-                    // ),
-
-                    ),
+                ),
                 const SizedBox(width: 10),
               ],
             ),
-            // AnimatedSwitcher(
-            // duration: const Duration(milliseconds: 500),
-            // transitionBuilder: (Widget child, Animation<double> animation) {
-            // return ScaleTransition(child: child, scale: animation);
-            // },
-            // child:
-            // starting
-            // ? const Text("Tap on the map to select your location")
-            // : const Text("Tap on the map to select your destination"),
-            // ),
-            // },
-            // child: starting ? _map() : _map2()),
-
             (keyboarTyping)
                 ? SizedBox(
                     child: Column(
@@ -333,24 +266,6 @@ class _LocationScreenState extends State<LocationScreen> {
                                   print(value[0].toString());
                                 }
                               });
-
-                              // placemarkFromCoordinates(27.6710, 85.4298).then(
-                              //   (value) {
-                              //     if (value.isEmpty) {
-                              //       print("No results found");
-                              //     } else {
-                              //       print(value[0].toString());
-                              //     }
-                              //     setState(() {
-                              //       (starting)
-                              //           ? startingPoint = pointT
-                              //           : destinationPoint = pointT;
-                              //       print(starting);
-                              //       print(tapPosition.relative?.distance);
-                              //       print(pointT);
-                              //     });
-                              //   },
-                              // );
                             },
                           ), // set the map's center
                           layers: [
@@ -439,68 +354,10 @@ class _LocationScreenState extends State<LocationScreen> {
                         ),
                       ],
                     ),
-                    // ),
                   ),
           ],
         ),
       ),
-    );
-  }
-
-  TextFormField textField({
-    required BuildContext context,
-    required String hint,
-    required Function oncomplete,
-    controller,
-  }) {
-    return TextFormField(
-      // onEditingComplete: () => oncomplete(),
-      //
-      // () {
-      // controller.selection = TextSelection.collapsed(
-      // offset: controller.text.length);
-      // FocusScope.of(context).unfocus();
-      // },
-      onTap: () {
-        setState(() {
-          keyboarTyping = true;
-        });
-      },
-      keyboardType: TextInputType.streetAddress,
-      controller: controller,
-      textInputAction: TextInputAction.next,
-      style: const TextStyle(color: Colors.white),
-      cursorColor: Colors.white,
-      decoration: InputDecoration(
-        // icon: const Icon(Icons.location_on, size: 40),
-        filled: true,
-        fillColor: const Color(0xFF171719),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            width: 1,
-            style: BorderStyle.none,
-          ),
-        ),
-        hintText: hint,
-        hintStyle:
-            const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            width: 1,
-            style: BorderStyle.none,
-          ),
-        ),
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter a address';
-        }
-        return null;
-      },
     );
   }
 }

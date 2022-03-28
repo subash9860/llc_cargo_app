@@ -4,9 +4,10 @@ import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
-import '../models/user_auth.dart';
-import '../models/user_data.dart';
+import './provider/user_auth.dart';
+import './provider/user_data.dart';
 import './Screen/splash_screen.dart';
+import './provider/form_data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,8 @@ class MyApp extends StatelessWidget {
             lazy: false, create: (_) => UserAuth()),
         ChangeNotifierProvider<UserData>(
             lazy: false, create: (_) => UserData()),
+        ChangeNotifierProvider<FormDataModel>(
+            lazy: false, create: (_) => FormDataModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../models/user_auth.dart';
-import '../models/user_data.dart';
+import '../provider/user_auth.dart';
+import '../provider/user_data.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({Key? key}) : super(key: key);

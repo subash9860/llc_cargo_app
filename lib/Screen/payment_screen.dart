@@ -23,10 +23,10 @@ class PaymentScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
-                    children: [
-                      const Icon(Icons.credit_card),
-                      const SizedBox(width: 16),
-                      const Text('Credit Card'),
+                    children:const [
+                      Icon(Icons.credit_card),
+                      SizedBox(width: 16),
+                      Text('Credit Card'),
                     ],
                   ),
                 ),
@@ -40,10 +40,10 @@ class PaymentScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
-                    children: [
-                      const Icon(Icons.paypal),
-                      const SizedBox(width: 16),
-                      const Text('Paypal'),
+                    children:const [
+                      Icon(Icons.paypal),
+                      SizedBox(width: 16),
+                      Text('Paypal'),
                     ],
                   ),
                 ),

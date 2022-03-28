@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import '../models/user_data.dart';
+import '../provider/user_data.dart';
 import '../Screen/book_trip_screen.dart';
 
 class HomeScreen extends StatelessWidget {

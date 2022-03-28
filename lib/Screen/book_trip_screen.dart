@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:llc/Screen/location_screen.dart';
 
+import '../Screen/location_screen.dart';
+import '../models/form_model.dart';
 import '../widgets/button_customized.dart';
-// import '../widgets/dimension.dart';
 
 enum DeliveryType { luggage, parcel }
 enum TransportationMode { roadway, railway, airway, waterway }
@@ -269,21 +269,22 @@ class _BookTripScreenState extends State<BookTripScreen> {
                     print("Quantity: " + _quantityController.text);
                     print("weight: " + _weightController.text);
                     print("Transport mode: " + _mode.toString());
-
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LocationScreen(),
-
-                        // DeliveryDetails(
-                        //   type: _type,
-                        //   length: _lengthController.text,
-                        //   width: _widthController.text,
-                        //   height: _heightController.text,
-                        //   quantity: _quantityController.text,
-                        //   weight: _weightController.text,
-                        //   mode: _mode,
-                        // ),
+                        builder: (context) => LocationScreen(
+                          // send the data to the next screen
+                          frmmodel: FormModel(
+                            uid: '3455',
+                            deliveyType: _type!,
+                            length: double.parse(_lengthController.text),
+                            width: double.parse(_widthController.text),
+                            height: double.parse(_heightController.text),
+                            quantity: double.parse(_quantityController.text),
+                            weight: double.parse(_weightController.text),
+                            transportationMode: _mode!,
+                          ),
+                        ),
                       ),
                     );
                   }
