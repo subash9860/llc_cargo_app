@@ -4,7 +4,7 @@ import '../Screen/book_trip_screen.dart';
 
 class FormModel with ChangeNotifier {
   final String uid;
-  final DeliveryType deliveyType;
+  final DeliveryType deliveryType;
   final double length;
   final double width;
   final double height;
@@ -14,7 +14,7 @@ class FormModel with ChangeNotifier {
 
   FormModel({
     required this.uid,
-    required this.deliveyType,
+    required this.deliveryType,
     required this.length,
     required this.width,
     required this.height,
@@ -26,7 +26,7 @@ class FormModel with ChangeNotifier {
   factory FormModel.fromJson(Map<String, dynamic> json) {
     return FormModel(
       uid: json['uid'] as String,
-      deliveyType: json['deliveyType'] as DeliveryType,
+      deliveryType: json['deliveryType'] as DeliveryType,
       length: json['length'] as double,
       width: json['width'] as double,
       height: json['height'] as double,
@@ -39,7 +39,7 @@ class FormModel with ChangeNotifier {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'uid': uid,
-      'deliveyType': deliveyType,
+      'deliveryType': deliveryType,
       'length': length,
       'width': width,
       'height': height,
@@ -48,4 +48,16 @@ class FormModel with ChangeNotifier {
       'transportationMode': transportationMode,
     };
   }
+}
+
+
+class LocationModel with ChangeNotifier{
+  final String startingPoint;
+  final String destination;
+
+  LocationModel({
+    required this.startingPoint,
+    required this.destination,
+  });
+
 }

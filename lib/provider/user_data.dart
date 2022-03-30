@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user_model.dart';
 
 class UserData with ChangeNotifier {
-  UserModel? _items;
-  UserModel? get items => _items;
+  Receive? _items;
+  Receive? get items => _items;
 
   Future<void> getUserData() async {
     final auth = FirebaseAuth.instance;
@@ -17,7 +17,7 @@ class UserData with ChangeNotifier {
     DocumentSnapshot snapshot =
         await users1.doc('${auth.currentUser?.uid}').get();
     var data = snapshot.data() as Map;
-    _items = UserModel(
+    _items = Receive(
       uid: data["uid"],
       email: data["email"],
       displayName: data["name"],

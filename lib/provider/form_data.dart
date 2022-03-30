@@ -10,4 +10,16 @@ class FormDataModel with ChangeNotifier {
     _items = itemsData;
     notifyListeners();
   }
+
+
+}
+
+class LocationModelData with ChangeNotifier {
+  LocationModel? _items;
+  LocationModel? get items => _items;
+
+  void setItems(LocationModel? itemsData) {
+    _items = itemsData;
+    notifyListeners();
+  }
 }

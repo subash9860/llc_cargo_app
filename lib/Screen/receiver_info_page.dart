@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:llc/models/form_model.dart';
+import 'package:llc/provider/form_data.dart';
+import 'package:provider/provider.dart';
 
 import './payment_screen.dart';
 
 class ReceiverInfoScreen extends StatefulWidget {
-  const ReceiverInfoScreen({Key? key}) : super(key: key);
+  final LocationModel locationModel;
+  const ReceiverInfoScreen({
+    Key? key,
+    required this.locationModel,
+  }) : super(key: key);
 
   @override
   State<ReceiverInfoScreen> createState() => _ReceiverInfoScreenState();
@@ -21,6 +28,8 @@ class _ReceiverInfoScreenState extends State<ReceiverInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<LocationModelData>(context, listen: false)
+        .setItems(widget.locationModel);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -122,7 +131,8 @@ class _ReceiverInfoScreenState extends State<ReceiverInfoScreen> {
                 ),
                 const SizedBox(height: 20),
                 const Text('Receiver Info',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 20),
                 formMethod(
                     contorller: _nameController,

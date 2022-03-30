@@ -19,14 +19,14 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  bool keyboarTyping = false;
+  bool keyboardTyping = false;
 
   bool starting = true;
   LatLng startingPoint = LatLng(27.6710, 85.4298);
   LatLng destinationPoint = LatLng(27.667246, 85.436371);
 
   final _formKey = GlobalKey<FormState>();
-  final _satrtingTextController = TextEditingController();
+  final _startingTextController = TextEditingController();
   final _destinationTextController = TextEditingController();
 
   _getCurrentLocation() {
@@ -47,7 +47,7 @@ class _LocationScreenState extends State<LocationScreen> {
             } else {
               print(value[0].toString());
             }
-            _satrtingTextController.text = value[0].toString();
+            _startingTextController.text = value[0].toString();
           },
         );
       });
@@ -123,11 +123,11 @@ class _LocationScreenState extends State<LocationScreen> {
                     },
                     onTap: () {
                       setState(() {
-                        keyboarTyping = true;
+                        keyboardTyping = true;
                       });
                     },
                     keyboardType: TextInputType.streetAddress,
-                    controller: _satrtingTextController,
+                    controller: _startingTextController,
                     textInputAction: TextInputAction.next,
                     style: const TextStyle(color: Colors.white),
                     cursorColor: Colors.white,
@@ -182,12 +182,12 @@ class _LocationScreenState extends State<LocationScreen> {
                       setState(() {
                         _findLatLongFromAddress(
                             "destination", _destinationTextController.text);
-                        keyboarTyping = false;
+                        keyboardTyping = false;
                       });
                     },
                     onTap: () {
                       setState(() {
-                        keyboarTyping = true;
+                        keyboardTyping = true;
                       });
                     },
                     keyboardType: TextInputType.streetAddress,
@@ -230,7 +230,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 const SizedBox(width: 10),
               ],
             ),
-            (keyboarTyping)
+            (keyboardTyping)
                 ? SizedBox(
                     child: Column(
                       children: [
@@ -240,7 +240,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           title: const Text("Set location on map"),
                           onTap: () {
                             setState(() {
-                              keyboarTyping = false;
+                              keyboardTyping = false;
                             });
                           },
                         ),
@@ -325,16 +325,25 @@ class _LocationScreenState extends State<LocationScreen> {
                           left: 30,
                           child: TextButton(
                             onPressed: () {
-                              // submiting the data to the server
-                              print(_satrtingTextController.text);
-                              print(_destinationTextController.text);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ReceiverInfoScreen(),
-                                ),
-                              );
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                // submiting the data to the server
+                                print(_startingTextController.text);
+                                print(_destinationTextController.text);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ReceiverInfoScreen(
+                                      locationModel: LocationModel(
+                                        startingPoint:
+                                            _startingTextController.text,
+                                        destination:
+                                            _destinationTextController.text,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
                             },
                             child: Container(
                               height: 40,

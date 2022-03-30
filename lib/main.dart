@@ -29,6 +29,8 @@ class MyApp extends StatelessWidget {
             lazy: false, create: (_) => UserData()),
         ChangeNotifierProvider<FormDataModel>(
             lazy: false, create: (_) => FormDataModel()),
+        ChangeNotifierProvider<LocationModelData>(
+            lazy: false, create: (_) => LocationModelData()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

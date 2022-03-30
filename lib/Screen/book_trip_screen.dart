@@ -70,7 +70,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
         icon: Icons.straighten,
         keyboardType: TextInputType.number);
 
-    final weightFeild = textField(
+    final weightField = textField(
         context: context,
         controller: _weightController,
         label: "weight",
@@ -105,7 +105,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  cardWidegt(
+                  cardWidget(
                     imageUrl: "./assets/luggage.png",
                     title: 'Luggage',
                     child: Radio<DeliveryType>(
@@ -121,7 +121,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
                       toggleable: true,
                     ),
                   ),
-                  cardWidegt(
+                  cardWidget(
                     imageUrl: "./assets/parcel.png",
                     title: 'Parcel',
                     child: Radio<DeliveryType>(
@@ -166,7 +166,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
                       children: [
                         Expanded(child: qualityField),
                         const SizedBox(width: 10),
-                        Expanded(child: weightFeild),
+                        Expanded(child: weightField),
                       ],
                     ),
                   ],
@@ -182,7 +182,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  cardWidegt(
+                  cardWidget(
                     imageUrl: "./assets/transport/air.png",
                     title: 'Airways',
                     child: Radio<TransportationMode>(
@@ -198,7 +198,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
                       toggleable: true,
                     ),
                   ),
-                  cardWidegt(
+                  cardWidget(
                     imageUrl: "./assets/transport/rail.png",
                     title: 'Railways',
                     child: Radio<TransportationMode>(
@@ -220,7 +220,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  cardWidegt(
+                  cardWidget(
                     imageUrl: "./assets/transport/road.png",
                     title: 'Roadways',
                     child: Radio<TransportationMode>(
@@ -236,7 +236,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
                       toggleable: true,
                     ),
                   ),
-                  cardWidegt(
+                  cardWidget(
                     imageUrl: "./assets/transport/water.png",
                     title: 'Waterways',
                     child: Radio<TransportationMode>(
@@ -276,7 +276,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
                           // send the data to the next screen
                           frmmodel: FormModel(
                             uid: '3455',
-                            deliveyType: _type!,
+                            deliveryType: _type!,
                             length: double.parse(_lengthController.text),
                             width: double.parse(_widthController.text),
                             height: double.parse(_heightController.text),
@@ -301,7 +301,7 @@ class _BookTripScreenState extends State<BookTripScreen> {
     );
   }
 
-  cardWidegt({
+  cardWidget({
     required String imageUrl,
     required Widget child,
     required String title,

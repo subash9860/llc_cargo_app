@@ -1,22 +1,22 @@
 import 'package:flutter/foundation.dart';
 
-class UserModel with ChangeNotifier {
+class Receive with ChangeNotifier {
   final String uid;
   final String email;
   final String displayName;
   final int phoneNumber;
   final String password;
 
-  UserModel(
+  Receive(
       {required this.uid,
       required this.email,
       required this.displayName,
       required this.password,
       required this.phoneNumber});
 
-  //recive data from server
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
+  //receive data from server
+  factory Receive.fromJson(Map<String, dynamic> json) {
+    return Receive(
       uid: json['uid'] as String,
       email: json['email'] as String,
       displayName: json['displayName'] as String,

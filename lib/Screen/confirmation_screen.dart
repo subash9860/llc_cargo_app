@@ -40,7 +40,7 @@ class ConfirmationScreen extends StatelessWidget {
               builder: (context, value, child) => Column(
                 children: [
                   Text(
-                    "${value.items?.deliveyType.name.split('.').first}",
+                    "${value.items?.deliveryType.name.split('.').first}",
                     style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -81,6 +81,14 @@ class ConfirmationScreen extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+          Consumer<LocationModelData>(
+            builder: ((context, value, child) => Column(
+                  children: [
+                    Text(value.items!.startingPoint),
+                    Text(value.items!.destination),
+                  ],
+                )),
           ),
           const SizedBox(height: 20),
           ElevatedButton(
