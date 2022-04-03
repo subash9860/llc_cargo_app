@@ -10,8 +10,6 @@ class FormDataModel with ChangeNotifier {
     _items = itemsData;
     notifyListeners();
   }
-
-
 }
 
 class LocationModelData with ChangeNotifier {
@@ -19,6 +17,26 @@ class LocationModelData with ChangeNotifier {
   LocationModel? get items => _items;
 
   void setItems(LocationModel? itemsData) {
+    _items = itemsData;
+    notifyListeners();
+  }
+}
+
+class BookedDateTimeModel with ChangeNotifier {
+  BookedDateTime? _items;
+  BookedDateTime? get items => _items;
+
+  void setItems(BookedDateTime? itemsData) {
+    _items = itemsData;
+    notifyListeners();
+  }
+}
+
+class ReceiverInfoModel with ChangeNotifier {
+  ReceiverInfo? _items;
+  ReceiverInfo? get items => _items;
+
+  void setItems(ReceiverInfo? itemsData) {
     _items = itemsData;
     notifyListeners();
   }

@@ -81,7 +81,7 @@ class _LocationScreenState extends State<LocationScreen> {
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
+    // _getCurrentLocation();
     Provider.of<FormDataModel>(context, listen: false)
         .setItems(widget.frmmodel);
   }

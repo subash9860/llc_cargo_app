@@ -27,9 +27,16 @@ class _ReceiverInfoScreenState extends State<ReceiverInfoScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     Provider.of<LocationModelData>(context, listen: false)
         .setItems(widget.locationModel);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Provider.of<LocationModelData>(context, listen: false)
+        // .setItems(widget.locationModel);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -135,25 +142,25 @@ class _ReceiverInfoScreenState extends State<ReceiverInfoScreen> {
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 20),
                 formMethod(
-                    contorller: _nameController,
+                    controller: _nameController,
                     hintText: "Ram",
                     labelText: "Full Name",
                     icon: Icons.person_outline),
                 const SizedBox(height: 20),
                 formMethod(
-                    contorller: _emailController,
+                    controller: _emailController,
                     hintText: "ram.kc42@gmail.com",
                     labelText: "Email",
                     icon: Icons.email_outlined),
                 const SizedBox(height: 20),
                 formMethod(
-                    contorller: _phoneController,
+                    controller: _phoneController,
                     hintText: "9800000000",
                     labelText: "Phone",
                     icon: Icons.phone_outlined),
                 const SizedBox(height: 20),
                 formMethod(
-                    contorller: _addressController,
+                    controller: _addressController,
                     hintText: "Kathmandu",
                     labelText: "Address",
                     icon: Icons.location_on_outlined),
@@ -171,7 +178,24 @@ class _ReceiverInfoScreenState extends State<ReceiverInfoScreen> {
                       print(_addressController.text);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return const PaymentScreen();
+                        return PaymentScreen(
+                          btime: BookedDateTime(
+                            date: 
+                            // (_date != null):  DateTime.now(),
+                            (_date ?? DateTime.now()),
+                            // ? "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}"
+                            // : "${_date!.year}-${_date!.month}-${_date!.day}",
+
+                            //  _date!,
+                            time: (_time ?? TimeOfDay.now()),
+                          ),
+                          rinfo: ReceiverInfo(
+                            fullName: _nameController.text,
+                            email: _emailController.text,
+                            phoneNumber: _phoneController.text,
+                            address: _addressController.text,
+                          ),
+                        );
                       }));
                     }
                   },
@@ -199,13 +223,13 @@ class _ReceiverInfoScreenState extends State<ReceiverInfoScreen> {
   }
 
   TextFormField formMethod(
-      {required TextEditingController contorller,
+      {required TextEditingController controller,
       required String hintText,
       required String labelText,
       required IconData icon}) {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      controller: contorller,
+      controller: controller,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.grey[200],

@@ -1,11 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:llc/Screen/confirmation_screen.dart';
 
-class PaymentScreen extends StatelessWidget {
-  const PaymentScreen({Key? key}) : super(key: key);
+import 'package:provider/provider.dart';
+
+import '../Screen/confirmation_screen.dart';
+import '../models/form_model.dart';
+import '../provider/form_data.dart';
+
+class PaymentScreen extends StatefulWidget {
+  final BookedDateTime btime;
+  final ReceiverInfo rinfo;
+  const PaymentScreen({
+    Key? key,
+    required this.btime,
+    required this.rinfo,
+  }) : super(key: key);
 
   @override
+  State<PaymentScreen> createState() => _PaymentScreenState();
+}
+
+class _PaymentScreenState extends State<PaymentScreen> {
+  @override
   Widget build(BuildContext context) {
+    Provider.of<BookedDateTimeModel>(context, listen: false)
+        .setItems(widget.btime);
+    Provider.of<ReceiverInfoModel>(context, listen: false)
+        .setItems(widget.rinfo);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -23,7 +43,7 @@ class PaymentScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
-                    children:const [
+                    children: const [
                       Icon(Icons.credit_card),
                       SizedBox(width: 16),
                       Text('Credit Card'),
@@ -40,7 +60,7 @@ class PaymentScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
-                    children:const [
+                    children: const [
                       Icon(Icons.paypal),
                       SizedBox(width: 16),
                       Text('Paypal'),
@@ -87,8 +107,8 @@ class PaymentScreen extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const ConfirmationScreen()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ConfirmationScreen()));
               },
               child: const Text('Submit'),
             ),

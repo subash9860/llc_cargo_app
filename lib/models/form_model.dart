@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import '../Screen/book_trip_screen.dart';
 
@@ -50,8 +50,7 @@ class FormModel with ChangeNotifier {
   }
 }
 
-
-class LocationModel with ChangeNotifier{
+class LocationModel with ChangeNotifier {
   final String startingPoint;
   final String destination;
 
@@ -59,5 +58,28 @@ class LocationModel with ChangeNotifier{
     required this.startingPoint,
     required this.destination,
   });
+}
 
+class BookedDateTime with ChangeNotifier {
+  final DateTime date;
+  final TimeOfDay time;
+
+  BookedDateTime({
+    required this.time,
+    required this.date,
+  });
+}
+
+class ReceiverInfo with ChangeNotifier {
+  final String fullName;
+  final String email;
+  final String phoneNumber;
+  final String address;
+
+  ReceiverInfo({
+    required this.fullName,
+    required this.email,
+    required this.phoneNumber,
+    required this.address,
+  });
 }
