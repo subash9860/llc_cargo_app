@@ -6,7 +6,7 @@ import '../provider/user_data.dart';
 import '../Screen/book_trip_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({ Key? key }) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

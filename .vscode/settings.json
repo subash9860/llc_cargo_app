@@ -1,7 +1,11 @@
 {
     "cmake.configureOnOpen": false,
     "cSpell.words": [
+        "buttonpress",
+        "buttton",
         "firestore",
-        "placemark"
+        "fluttertoast",
+        "placemark",
+        "toggleable"
     ]
 }

@@ -35,7 +35,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            const Text('Payment Method'),
             const SizedBox(height: 16),
             InkWell(
               onTap: () {},
@@ -86,7 +85,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             // add cash
             InkWell(
               onTap: () {},
@@ -97,7 +96,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     children: const [
                       Icon(Icons.monetization_on),
                       SizedBox(width: 16),
-                      Text('Cash'),
+                      Text('Cash on Delivery'),
                     ],
                   ),
                 ),
@@ -110,7 +109,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const ConfirmationScreen()));
               },
-              child: const Text('Submit'),
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  child: const Center(child: Text('Submit'))),
             ),
           ],
         ),
