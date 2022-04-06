@@ -204,33 +204,6 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        title: const Text('Confirmation'),
-                        content: const Text('Your Cargo has been booked.'),
-                        actions: [
-                          ElevatedButton(
-                            onPressed: () => Navigator.of(context).pop(
-                              MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
-                                
-                                // Todo : add data to server and show success message
-                              ),
-                            ),
-                            child: const Text('No'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) => const TabScreen(),
-                            )),
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ));
-            },
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.7,
               height: MediaQuery.of(context).size.height * 0.07,
@@ -244,6 +217,32 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 ),
               ),
             ),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Confirmation'),
+                  content: const Text('Your Cargo has been booked.'),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('No'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const TabScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       ),
