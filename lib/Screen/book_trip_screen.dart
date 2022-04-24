@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:llc/provider/form_data.dart';
+import 'package:provider/provider.dart';
 
 import '../Screen/location_screen.dart';
 import '../models/form_model.dart';
@@ -269,22 +271,24 @@ class _BookTripScreenState extends State<BookTripScreen> {
                     print("Quantity: " + _quantityController.text);
                     print("weight: " + _weightController.text);
                     print("Transport mode: " + _mode.toString());
+
+                    Provider.of<FormDataModel>(context, listen: false).setItems(
+                      FormModel(
+                        uid: '3455',
+                        deliveryType: _type!,
+                        length: double.parse(_lengthController.text),
+                        width: double.parse(_widthController.text),
+                        height: double.parse(_heightController.text),
+                        quantity: double.parse(_quantityController.text),
+                        weight: double.parse(_weightController.text),
+                        transportationMode: _mode!,
+                      ),
+                    );
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LocationScreen(
-                          // send the data to the next screen
-                          frmmodel: FormModel(
-                            uid: '3455',
-                            deliveryType: _type!,
-                            length: double.parse(_lengthController.text),
-                            width: double.parse(_widthController.text),
-                            height: double.parse(_heightController.text),
-                            quantity: double.parse(_quantityController.text),
-                            weight: double.parse(_weightController.text),
-                            transportationMode: _mode!,
-                          ),
-                        ),
+                        builder: (context) => const LocationScreen(),
                       ),
                     );
                   }

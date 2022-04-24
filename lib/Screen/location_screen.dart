@@ -11,8 +11,9 @@ import '../models/form_model.dart';
 import '../provider/form_data.dart';
 
 class LocationScreen extends StatefulWidget {
-  final FormModel frmmodel;
-  const LocationScreen({Key? key, required this.frmmodel}) : super(key: key);
+  const LocationScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<LocationScreen> createState() => _LocationScreenState();
@@ -76,14 +77,6 @@ class _LocationScreenState extends State<LocationScreen> {
         });
       },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // _getCurrentLocation();
-    Provider.of<FormDataModel>(context, listen: false)
-        .setItems(widget.frmmodel);
   }
 
   @override
@@ -330,17 +323,22 @@ class _LocationScreenState extends State<LocationScreen> {
                                 // submiting the data to the server
                                 print(_startingTextController.text);
                                 print(_destinationTextController.text);
+
+                                Provider.of<LocationModelData>(context,
+                                        listen: false)
+                                    .setItems(
+                                  LocationModel(
+                                    startingPoint: _startingTextController.text,
+                                    destination:
+                                        _destinationTextController.text,
+                                  ),
+                                );
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ReceiverInfoScreen(
-                                      locationModel: LocationModel(
-                                        startingPoint:
-                                            _startingTextController.text,
-                                        destination:
-                                            _destinationTextController.text,
-                                      ),
-                                    ),
+                                    builder: (context) =>
+                                        const ReceiverInfoScreen(),
                                   ),
                                 );
                               }

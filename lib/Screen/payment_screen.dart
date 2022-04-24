@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 import '../Screen/confirmation_screen.dart';
-import '../models/form_model.dart';
-import '../provider/form_data.dart';
 
 class PaymentScreen extends StatefulWidget {
-  final BookedDateTime btime;
-  final ReceiverInfo rinfo;
   const PaymentScreen({
     Key? key,
-    required this.btime,
-    required this.rinfo,
   }) : super(key: key);
 
   @override
@@ -22,10 +14,6 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
-    Provider.of<BookedDateTimeModel>(context, listen: false)
-        .setItems(widget.btime);
-    Provider.of<ReceiverInfoModel>(context, listen: false)
-        .setItems(widget.rinfo);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

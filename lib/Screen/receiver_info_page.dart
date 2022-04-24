@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:llc/models/form_model.dart';
-import 'package:llc/provider/form_data.dart';
 import 'package:provider/provider.dart';
 
 import './payment_screen.dart';
+import '../models/form_model.dart';
+import '../provider/form_data.dart';
 
 class ReceiverInfoScreen extends StatefulWidget {
-  final LocationModel locationModel;
   const ReceiverInfoScreen({
     Key? key,
-    required this.locationModel,
   }) : super(key: key);
 
   @override
@@ -27,16 +25,7 @@ class _ReceiverInfoScreenState extends State<ReceiverInfoScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    Provider.of<LocationModelData>(context, listen: false)
-        .setItems(widget.locationModel);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // Provider.of<LocationModelData>(context, listen: false)
-        // .setItems(widget.locationModel);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -176,27 +165,30 @@ class _ReceiverInfoScreenState extends State<ReceiverInfoScreen> {
                       print(_emailController.text);
                       print(_phoneController.text);
                       print(_addressController.text);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return PaymentScreen(
-                          btime: BookedDateTime(
-                            date: 
-                            // (_date != null):  DateTime.now(),
-                            (_date ?? DateTime.now()),
-                            // ? "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}"
-                            // : "${_date!.year}-${_date!.month}-${_date!.day}",
 
-                            //  _date!,
-                            time: (_time ?? TimeOfDay.now()),
-                          ),
-                          rinfo: ReceiverInfo(
-                            fullName: _nameController.text,
-                            email: _emailController.text,
-                            phoneNumber: _phoneController.text,
-                            address: _addressController.text,
-                          ),
-                        );
-                      }));
+                      Provider.of<BookedDateTimeModel>(context, listen: false)
+                          .setItems(
+                        BookedDateTime(
+                          date: (_date ?? DateTime.now()),
+                          time: (_time ?? TimeOfDay.now()),
+                        ),
+                      );
+                      Provider.of<ReceiverInfoModel>(context, listen: false)
+                          .setItems(
+                        ReceiverInfo(
+                          fullName: _nameController.text,
+                          email: _emailController.text,
+                          phoneNumber: _phoneController.text,
+                          address: _addressController.text,
+                        ),
+                      );
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PaymentScreen(),
+                        ),
+                      );
                     }
                   },
                   child: Container(
