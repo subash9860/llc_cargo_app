@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:llc/Screen/book_trip_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../Screen/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../Screen/tabs_screen.dart';
 import '../provider/form_data.dart';
+import '../Screen/book_trip_screen.dart';
 
 class ConfirmationScreen extends StatefulWidget {
   const ConfirmationScreen({Key? key}) : super(key: key);
@@ -38,10 +40,6 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                     blurRadius: 10)
               ],
             ),
-            // child: Container(
-            // padding: const EdgeInsets.all(8.0),
-            // alignment: Alignment.topCenter,
-
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -230,7 +228,50 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        
+                        // store data on firebase if booked is comfirmed
+                        StoreInFirebaseModel().storeInFirebase();
+
+                        // FirebaseFirestore.instance.collection('booked').doc(
+                        //   '${auth.currentUser?.uid}'
+                        // ).set({
+
+                        //   'booked': true,
+                        //   'bookingId': '${auth.currentUser?.uid}',
+                        //   'bookingDate': DateTime.now(),
+                        //   'bookingTime': DateTime.now(),
+                        //   'bookingStatus': 'comfirmed',
+                        //   'bookingType':    '${value.items!.transportationMode.name.split('.').first}',
+                        //   'bookingFrom': '${value.items!.startingPoint}',
+                        //   'bookingTo': '${value.items!.destination}',
+                        //   'bookingDateTime': '${value.items!.date.day}/${value.items!.date.month}/${value.items!.date.year}, ${value.items!.time.format(context)}',
+                        //   'bookingReceiverName': '${value.items!.fullName}',
+                        //   'bookingReceiverEmail': '${value.items!.email}',
+                        //   'bookingReceiverPhone': '${value.items!.phoneNumber}',
+                        //   'bookingReceiverAddress': '${value.items!.address}',
+                        //   'bookingTransportationCharge': 1000,
+                        //   'bookingEmergencyCharge': 100,
+                        //   'bookingServiceCharge': 10,
+                        //   'bookingTotal': 1110,
+                        //   'bookingPayment': 'Cash on delivery',
+                        // });
+
+                        // 'cargoId': value.items!.id,
+                        // 'cargoName': value.items!.name,
+                        // 'cargoWeight': value.items!.weight,
+                        // 'cargoQuantity': value.items!.quantity,
+                        // 'cargoTransportationMode': value.items!.transportationMode.name.split('.').first,
+                        // 'cargoStartingPoint': value.items!.startingPoint,
+                        // 'cargoDestination': value.items!.destination,
+                        // 'cargoDate': value.items!.date.toString(),
+                        // 'cargoTime': value.items!.time.toString(),
+                        // 'cargoReceiverName': value.items!.fullName,
+                        // 'cargoReceiverEmail': value.items!.email,
+                        // 'cargoReceiverPhoneNumber': value.items!.phoneNumber,
+                        // 'cargoReceiverAddress': value.items!.address,
+                        // 'cargoTotal': value.items!.total,
+                        // 'cargoPaymentMode': value.items!.paymentMode.name.split('.').first,
+                        // });
+
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => const TabScreen(),
