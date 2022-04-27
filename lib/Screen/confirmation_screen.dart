@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:llc/models/form_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -229,48 +230,15 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                     ElevatedButton(
                       onPressed: () {
                         // store data on firebase if booked is comfirmed
-                        StoreInFirebaseModel().storeInFirebase();
 
-                        // FirebaseFirestore.instance.collection('booked').doc(
-                        //   '${auth.currentUser?.uid}'
-                        // ).set({
-
-                        //   'booked': true,
-                        //   'bookingId': '${auth.currentUser?.uid}',
-                        //   'bookingDate': DateTime.now(),
-                        //   'bookingTime': DateTime.now(),
-                        //   'bookingStatus': 'comfirmed',
-                        //   'bookingType':    '${value.items!.transportationMode.name.split('.').first}',
-                        //   'bookingFrom': '${value.items!.startingPoint}',
-                        //   'bookingTo': '${value.items!.destination}',
-                        //   'bookingDateTime': '${value.items!.date.day}/${value.items!.date.month}/${value.items!.date.year}, ${value.items!.time.format(context)}',
-                        //   'bookingReceiverName': '${value.items!.fullName}',
-                        //   'bookingReceiverEmail': '${value.items!.email}',
-                        //   'bookingReceiverPhone': '${value.items!.phoneNumber}',
-                        //   'bookingReceiverAddress': '${value.items!.address}',
-                        //   'bookingTransportationCharge': 1000,
-                        //   'bookingEmergencyCharge': 100,
-                        //   'bookingServiceCharge': 10,
-                        //   'bookingTotal': 1110,
-                        //   'bookingPayment': 'Cash on delivery',
-                        // });
-
-                        // 'cargoId': value.items!.id,
-                        // 'cargoName': value.items!.name,
-                        // 'cargoWeight': value.items!.weight,
-                        // 'cargoQuantity': value.items!.quantity,
-                        // 'cargoTransportationMode': value.items!.transportationMode.name.split('.').first,
-                        // 'cargoStartingPoint': value.items!.startingPoint,
-                        // 'cargoDestination': value.items!.destination,
-                        // 'cargoDate': value.items!.date.toString(),
-                        // 'cargoTime': value.items!.time.toString(),
-                        // 'cargoReceiverName': value.items!.fullName,
-                        // 'cargoReceiverEmail': value.items!.email,
-                        // 'cargoReceiverPhoneNumber': value.items!.phoneNumber,
-                        // 'cargoReceiverAddress': value.items!.address,
-                        // 'cargoTotal': value.items!.total,
-                        // 'cargoPaymentMode': value.items!.paymentMode.name.split('.').first,
-                        // });
+                        Provider.of<FormDataModel>(context, listen: false)
+                            .storeInFirebase();
+                        Provider.of<LocationModelData>(context, listen: false)
+                            .storeInFirebase();
+                        Provider.of<BookedDateTimeModel>(context, listen: false)
+                            .storeInFirebase();
+                        Provider.of<ReceiverInfoModel>(context, listen: false)
+                            .storeInFirebase();
 
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(

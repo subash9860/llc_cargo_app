@@ -7,6 +7,8 @@ import '../models/form_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+final auth = FirebaseAuth.instance;
+
 class FormDataModel with ChangeNotifier {
   FormModel? _items;
   FormModel? get items => _items;
@@ -14,6 +16,23 @@ class FormDataModel with ChangeNotifier {
   void setItems(FormModel? itemsData) {
     _items = itemsData;
     notifyListeners();
+  }
+
+  Future<void> storeInFirebase() async {
+    await FirebaseFirestore.instance
+        .collection('booking')
+        .doc('${auth.currentUser?.uid}')
+        .collection('formData')
+        .add({
+      'uid': auth.currentUser?.uid,
+      'deliveryType': _items?.deliveryType.name,
+      'length': _items?.length,
+      'width': _items?.width,
+      'height': _items?.height,
+      'quantity': _items?.quantity,
+      'weight': _items?.weight,
+      'transportationMode': _items?.transportationMode.name,
+    });
   }
 }
 
@@ -25,6 +44,18 @@ class LocationModelData with ChangeNotifier {
     _items = itemsData;
     notifyListeners();
   }
+
+  Future<void> storeInFirebase() async {
+    await FirebaseFirestore.instance
+        .collection('booking')
+        .doc('${auth.currentUser?.uid}')
+        .collection('locationData')
+        .add({
+      'uid': auth.currentUser?.uid,
+      'startingPoint': _items?.startingPoint,
+      'destination': _items?.destination,
+    });
+  }
 }
 
 class BookedDateTimeModel with ChangeNotifier {
@@ -34,6 +65,20 @@ class BookedDateTimeModel with ChangeNotifier {
   void setItems(BookedDateTime? itemsData) {
     _items = itemsData;
     notifyListeners();
+  }
+
+  Future<void> storeInFirebase() async {
+    await FirebaseFirestore.instance
+        .collection('booking')
+        .doc('${auth.currentUser?.uid}')
+        .collection('bookedDateTime')
+        .add({
+      'uid': auth.currentUser?.uid,
+      'time':
+          '${_items?.time.hour.toString()}:${_items?.time.minute.toString()}',
+      'date':
+          '${_items?.date.year.toString()}-${_items?.date.month.toString()}-${_items?.date.day.toString()}',
+    });
   }
 }
 
@@ -45,20 +90,18 @@ class ReceiverInfoModel with ChangeNotifier {
     _items = itemsData;
     notifyListeners();
   }
-}
 
-class StoreInFirebaseModel {
-  final auth = FirebaseAuth.instance;
   Future<void> storeInFirebase() async {
-    FirebaseFirestore.instance
-        .collection('booked')
+    await FirebaseFirestore.instance
+        .collection('booking')
         .doc('${auth.currentUser?.uid}')
-        .collection('booking details')
+        .collection('ReciverInfo')
         .add({
-      'booked': true,
-      'bookingId': '${auth.currentUser?.uid}',
-      'date': '${DateTime.now()}',
-      'time': '${DateTime.now()}',
+      'uid': auth.currentUser?.uid,
+      'fullName': _items?.fullName,
+      'email': _items?.email,
+      'phoneNumber': _items?.phoneNumber,
+      'address': _items?.address,
     });
   }
 }
