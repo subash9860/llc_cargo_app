@@ -324,10 +324,15 @@ class _LocationScreenState extends State<LocationScreen> {
                                 print(_startingTextController.text);
                                 print(_destinationTextController.text);
 
+                                final uuid = Provider.of<FormDataModel>(context,
+                                        listen: false)
+                                    .uuid;
+
                                 Provider.of<LocationModelData>(context,
                                         listen: false)
                                     .setItems(
                                   LocationModel(
+                                    uid: uuid,
                                     startingPoint: _startingTextController.text,
                                     destination:
                                         _destinationTextController.text,

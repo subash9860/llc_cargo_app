@@ -272,9 +272,15 @@ class _BookTripScreenState extends State<BookTripScreen> {
                     print("weight: " + _weightController.text);
                     print("Transport mode: " + _mode.toString());
 
+                    final uuid =
+                        Provider.of<FormDataModel>(context, listen: false)
+                            .getUuid();
+                    final uid =
+                        Provider.of<FormDataModel>(context, listen: false).uuid;
+
                     Provider.of<FormDataModel>(context, listen: false).setItems(
                       FormModel(
-                        uid: '3455',
+                        uid: uid,
                         deliveryType: _type!,
                         length: double.parse(_lengthController.text),
                         width: double.parse(_widthController.text),

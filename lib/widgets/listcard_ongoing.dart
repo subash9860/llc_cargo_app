@@ -23,7 +23,7 @@ class ListCard extends StatelessWidget {
           children: [
             Container(
               margin: const EdgeInsets.only(left: 15),
-              height: MediaQuery.of(context).size.height * 0.24,
+              height: MediaQuery.of(context).size.height * 0.25,
               width: MediaQuery.of(context).size.width * 0.4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

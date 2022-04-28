@@ -166,9 +166,14 @@ class _ReceiverInfoScreenState extends State<ReceiverInfoScreen> {
                       print(_phoneController.text);
                       print(_addressController.text);
 
+                      final uuid =
+                          Provider.of<FormDataModel>(context, listen: false)
+                              .uuid;
+
                       Provider.of<BookedDateTimeModel>(context, listen: false)
                           .setItems(
                         BookedDateTime(
+                          uid: uuid,
                           date: (_date ?? DateTime.now()),
                           time: (_time ?? TimeOfDay.now()),
                         ),
@@ -176,6 +181,7 @@ class _ReceiverInfoScreenState extends State<ReceiverInfoScreen> {
                       Provider.of<ReceiverInfoModel>(context, listen: false)
                           .setItems(
                         ReceiverInfo(
+                          uid: uuid,
                           fullName: _nameController.text,
                           email: _emailController.text,
                           phoneNumber: _phoneController.text,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Screen/book_trip_screen.dart';
 
 class FormModel with ChangeNotifier {
-  final String uid;
+  final int uid;
   final DeliveryType deliveryType;
   final double length;
   final double width;
@@ -25,7 +25,7 @@ class FormModel with ChangeNotifier {
 
   factory FormModel.fromJson(Map<String, dynamic> json) {
     return FormModel(
-      uid: json['uid'] as String,
+      uid: json['uid'] as int,
       deliveryType: json['deliveryType'] as DeliveryType,
       length: json['length'] as double,
       width: json['width'] as double,
@@ -39,44 +39,50 @@ class FormModel with ChangeNotifier {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'uid': uid,
-      'deliveryType': deliveryType,
+      'deliveryType': deliveryType.name,
       'length': length,
       'width': width,
       'height': height,
       'quantity': quantity,
       'weight': weight,
-      'transportationMode': transportationMode,
+      'transportationMode': transportationMode.name,
     };
   }
 }
 
 class LocationModel with ChangeNotifier {
+  final int uid;
   final String startingPoint;
   final String destination;
 
   LocationModel({
+    required this.uid,
     required this.startingPoint,
     required this.destination,
   });
 }
 
 class BookedDateTime with ChangeNotifier {
+  final int uid;
   final DateTime date;
   final TimeOfDay time;
 
   BookedDateTime({
+    required this.uid,
     required this.time,
     required this.date,
   });
 }
 
 class ReceiverInfo with ChangeNotifier {
+  final int uid;
   final String fullName;
   final String email;
   final String phoneNumber;
   final String address;
 
   ReceiverInfo({
+    required this.uid,
     required this.fullName,
     required this.email,
     required this.phoneNumber,

@@ -230,15 +230,18 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                     ElevatedButton(
                       onPressed: () {
                         // store data on firebase if booked is comfirmed
+                        final uuid =
+                            Provider.of<FormDataModel>(context, listen: false)
+                                .uuid;
 
                         Provider.of<FormDataModel>(context, listen: false)
                             .storeInFirebase();
                         Provider.of<LocationModelData>(context, listen: false)
-                            .storeInFirebase();
+                            .storeInFirebase(uuid);
                         Provider.of<BookedDateTimeModel>(context, listen: false)
-                            .storeInFirebase();
+                            .storeInFirebase(uuid);
                         Provider.of<ReceiverInfoModel>(context, listen: false)
-                            .storeInFirebase();
+                            .storeInFirebase(uuid);
 
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(

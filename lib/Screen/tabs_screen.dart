@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:llc/provider/form_data.dart';
+import 'package:provider/provider.dart';
 
 import '../Screen/book_trip_screen.dart';
 import './user_profile.dart';
@@ -84,7 +86,11 @@ class _TabScreenState extends State<TabScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
-          // Booking new trip screen
+          // Booking new trip screen   
+          //
+          //
+          // Provider.of<FormDataModel>(context, listen: false).getFormData();
+          //                       
           Navigator.push(context,
               MaterialPageRoute(builder: (_) => const BookTripScreen()));
         },
