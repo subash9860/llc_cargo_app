@@ -1,8 +1,6 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../models/form_model.dart';
 
@@ -26,22 +24,6 @@ class FormDataModel with ChangeNotifier {
   }
 
   Future<void> storeInFirebase() async {
-    // int docCount = 0;
-
-    // collection -> document -> collection -> count documents
-    // booking    -> uid      -> formdata   -> docCount
-
-    // await FirebaseFirestore.instance
-    //     .collection('booking')
-    //     .doc(auth.currentUser?.uid)
-    //     .collection('formdata')
-    //     .get()
-    //     .then((value) {
-    //   docCount = value.docs.length;
-    //   print(docCount);
-    //   docCount++;
-    // });
-
     // collection -> document -> collection -> document  -> field
     // booking    -> uid      -> formdata   -> doc Index -> data
 
@@ -53,38 +35,25 @@ class FormDataModel with ChangeNotifier {
         .set(_items?.toJson() ?? {});
   }
 
-  Future<void> getFormData() async {
-    CollectionReference formData =
-        FirebaseFirestore.instance.collection('booking');
+  // list of all the documents in the formdata collection
+  // set the list of documents in the formdata collection
 
-    DocumentSnapshot snapshot = await formData
+  final List<FormModel> formDataList = [];
+
+  Future<void> getFromFirebase() async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('booking')
         .doc('${auth.currentUser?.uid}')
         .collection('formdata')
-        .snapshots()
-        .forEach((element) {
-      element.docs.forEach((element) {
-        print(element.data());
-      });
-      // FormModel.fromJson(json.decode(element));
-      // _items = FormModel.fromJson(json.decode(element));
-    });
-    // .first.then((value) {
-    // var data = value.docs.map((e) => FormModel.fromJson(e.data()));
-    // .doc().get();
-    // var data = snapshot.data() as Map;
+        .get();
 
-    // _items =
+    for (final doc in querySnapshot.docs) {
+      final formData = FormModel.fromJson(doc.data());
+      formDataList.add(formData);
+      notifyListeners();
+    }
 
-    // Receive(
-    //   uid: data["uid"],
-    //   email: data["email"],
-    //   displayName: data["name"],
-    //   password: data["password"],
-    //   phoneNumber: int.parse(
-    //     data["phoneNumber"],
-    //   ),
-    // );
-    notifyListeners();
+    setItems(formDataList.last);
   }
 }
 
@@ -98,17 +67,6 @@ class LocationModelData with ChangeNotifier {
   }
 
   Future<void> storeInFirebase(int id) async {
-    // int docCount = 0;
-    // await FirebaseFirestore.instance
-    //     .collection('booking')
-    //     .doc(auth.currentUser?.uid)
-    //     .collection('locationdata')
-    //     .get()
-    //     .then((value) {
-    //   docCount = value.docs.length;
-    //   print(docCount);
-    //   docCount++;
-    // });
     await FirebaseFirestore.instance
         .collection('booking')
         .doc('${auth.currentUser?.uid}')
@@ -119,6 +77,27 @@ class LocationModelData with ChangeNotifier {
       'startingPoint': _items?.startingPoint,
       'destination': _items?.destination,
     });
+  }
+
+  // set the list of documents in the locationdata collection
+  final List<LocationModel> locationDataList = [];
+
+  Future<void> getLocationFirebase() async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('booking')
+        .doc('${auth.currentUser?.uid}')
+        .collection('locationdata')
+        .get();
+
+    for (final doc in querySnapshot.docs) {
+      final locationData = LocationModel(
+          uid: doc.data()['uid'],
+          startingPoint: doc.data()['startingPoint'],
+          destination: doc.data()['destination']);
+      locationDataList.add(locationData);
+      notifyListeners();
+    }
+    setItems(locationDataList.last);
   }
 }
 
@@ -132,17 +111,6 @@ class BookedDateTimeModel with ChangeNotifier {
   }
 
   Future<void> storeInFirebase(int id) async {
-    // int docCount = 0;
-    // await FirebaseFirestore.instance
-    //     .collection('booking')
-    //     .doc(auth.currentUser?.uid)
-    //     .collection('bookedDateTime')
-    //     .get()
-    //     .then((value) {
-    //   docCount = value.docs.length;
-    //   print(docCount);
-    //   docCount++;
-    // });
     await FirebaseFirestore.instance
         .collection('booking')
         .doc('${auth.currentUser?.uid}')
@@ -156,6 +124,29 @@ class BookedDateTimeModel with ChangeNotifier {
           '${_items?.date.year.toString()}-${_items?.date.month.toString()}-${_items?.date.day.toString()}',
     });
   }
+
+  // set the list of documents in the bookedDateTime collection
+  final List<BookedDateTime> bookedDateTimeList = [];
+
+  Future<void> getDateTimeFirebase() async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('booking')
+        .doc('${auth.currentUser?.uid}')
+        .collection('bookedDateTime')
+        .get();
+
+    for (final doc in querySnapshot.docs) {
+      final bookedDateTime = BookedDateTime(
+          uid: doc.data()['uid'],
+          time: 
+            TimeOfDay(hour: int.parse(doc.data()['time'].split(':')[0]), minute: int.parse(doc.data()['time'].split(':')[1])),
+          date:  
+          DateTime(int.parse(doc.data()['date'].split('-')[0]), int.parse(doc.data()['date'].split('-')[1]), int.parse(doc.data()['date'].split('-')[2])));
+      bookedDateTimeList.add(bookedDateTime);
+      notifyListeners();
+    }
+    setItems(bookedDateTimeList.last);
+  }
 }
 
 class ReceiverInfoModel with ChangeNotifier {
@@ -168,17 +159,6 @@ class ReceiverInfoModel with ChangeNotifier {
   }
 
   Future<void> storeInFirebase(int id) async {
-    // int docCount = 0;
-    // await FirebaseFirestore.instance
-    //     .collection('booking')
-    //     .doc(auth.currentUser?.uid)
-    //     .collection('receiverInfo')
-    //     .get()
-    //     .then((value) {
-    //   docCount = value.docs.length;
-    //   print(docCount);
-    //   docCount++;
-    // });
     await FirebaseFirestore.instance
         .collection('booking')
         .doc('${auth.currentUser?.uid}')
@@ -191,5 +171,28 @@ class ReceiverInfoModel with ChangeNotifier {
       'phoneNumber': _items?.phoneNumber,
       'address': _items?.address,
     });
+  }
+
+  // set the list of documents in the receiverInfo collection
+  final List<ReceiverInfo> receiverInfoList = [];
+
+  Future<void> getReceiverInfoFirebase() async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('booking')
+        .doc('${auth.currentUser?.uid}')
+        .collection('receiverInfo')
+        .get();
+
+    for (final doc in querySnapshot.docs) {
+      final receiverInfo = ReceiverInfo(
+          uid: doc.data()['uid'],
+          fullName: doc.data()['fullName'],
+          email: doc.data()['email'],
+          phoneNumber: doc.data()['phoneNumber'],
+          address: doc.data()['address']);
+      receiverInfoList.add(receiverInfo);
+      notifyListeners();
+    }
+    setItems(receiverInfoList.last);
   }
 }

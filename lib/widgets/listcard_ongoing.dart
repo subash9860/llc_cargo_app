@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ListCard extends StatelessWidget {
+  final String name;
+  final String from;
+  final String to;
+  final DateTime date;
+  final TimeOfDay time;
   const ListCard({
     Key? key,
+    required this.name,
+    required this.from,
+    required this.to,
+    required this.date,
+    required this.time,
   }) : super(key: key);
 
   @override
@@ -23,47 +33,57 @@ class ListCard extends StatelessWidget {
           children: [
             Container(
               margin: const EdgeInsets.only(left: 15),
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: MediaQuery.of(context).size.height * 0.28,
               width: MediaQuery.of(context).size.width * 0.4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.015,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 70, top: 5),
+                    child: Text(
+                      name,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  const Text(
-                    "Item Name",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
+                  Text(
+                    "From: \t\t\t\t\t" + from,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
                   ),
-                  const Text(
-                    "From\t\t\t\t\t\t\t\tPlace-1street",
-                    style: TextStyle(
+                  Text(
+                    "To: \t\t\t\t\t\t\t\t\t\t" + to,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     ),
                   ),
                   const Text(
-                    "To\t\t\t\t\t\t\t\t\t\t\t\t\tPlace-2street",
+                    "Status     Confirmed",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     ),
                   ),
-                  const Text(
-                    "Status        Confirmed",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const Text(
-                    "August 5,  4 PM ",
-                    style: TextStyle(
+                  Text(
+                    "Date:\t\t\t\t\t\t\t" +
+                        date.year.toString() +
+                        " - " +
+                        date.month.toString() +
+                        " - " +
+                        date.day.toString() +
+                        '\n' +
+                        'Time: \t\t\t\t\t' +
+                        time.hour.toString() +
+                        ":" +
+                        time.minute.toString(),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     ),

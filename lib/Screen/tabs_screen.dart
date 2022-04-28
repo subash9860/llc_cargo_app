@@ -20,6 +20,11 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   initState() {
+    Provider.of<FormDataModel>(context, listen: false).getFromFirebase();
+    Provider.of<LocationModelData>(context, listen: false)
+        .getLocationFirebase();
+    Provider.of<BookedDateTimeModel>(context, listen: false)
+        .getDateTimeFirebase();
     _page = [
       {
         'page': const HomeScreen(),
@@ -86,13 +91,10 @@ class _TabScreenState extends State<TabScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
-          // Booking new trip screen   
-          //
-          //
-          // Provider.of<FormDataModel>(context, listen: false).getFormData();
-          //                       
+          // Booking new trip screen
           Navigator.push(context,
               MaterialPageRoute(builder: (_) => const BookTripScreen()));
+          
         },
         child: const Icon(Icons.local_shipping_outlined),
       ),

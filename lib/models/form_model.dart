@@ -26,13 +26,21 @@ class FormModel with ChangeNotifier {
   factory FormModel.fromJson(Map<String, dynamic> json) {
     return FormModel(
       uid: json['uid'] as int,
-      deliveryType: json['deliveryType'] as DeliveryType,
+      deliveryType: (json['deliveryType'] == 'luggage')
+          ? DeliveryType.luggage
+          : DeliveryType.parcel,
       length: json['length'] as double,
       width: json['width'] as double,
       height: json['height'] as double,
       quantity: json['quantity'] as double,
       weight: json['weight'] as double,
-      transportationMode: json['transportationMode'] as TransportationMode,
+      transportationMode: (json['transportationMode'] == 'airway')
+          ? TransportationMode.airway
+          : ((json['transportationMode'] == 'railway')
+              ? TransportationMode.railway
+              : ((json['transportationMode'] == 'waterway')
+                  ? TransportationMode.waterway
+                  : TransportationMode.roadway)),
     );
   }
 
