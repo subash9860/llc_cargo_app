@@ -51,35 +51,35 @@ class ListCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "From: \t\t\t\t\t" + from,
+                    "From:    " + from,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     ),
                   ),
                   Text(
-                    "To: \t\t\t\t\t\t\t\t\t\t" + to,
+                    "To:       " + to,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     ),
                   ),
                   const Text(
-                    "Status     Confirmed",
+                    "Status      Confirmed",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     ),
                   ),
                   Text(
-                    "Date:\t\t\t\t\t\t\t" +
+                    "Date:      " +
                         date.year.toString() +
                         " - " +
                         date.month.toString() +
                         " - " +
                         date.day.toString() +
                         '\n' +
-                        'Time: \t\t\t\t\t' +
+                        'Time:    ' +
                         time.hour.toString() +
                         ":" +
                         time.minute.toString(),
