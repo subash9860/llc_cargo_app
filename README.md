@@ -1,5 +1,5 @@
-# luxras_light_cargo
+# cargo App
 
 A parcel/ goods delivery app.
 
-<img scr="./assets/ui.png">
+<img src="./assets/ui.png">
