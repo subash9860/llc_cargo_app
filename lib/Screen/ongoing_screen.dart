@@ -29,16 +29,21 @@ class _OngoingScreenState extends State<OngoingScreen> {
         ? ListView.builder(
             itemCount: formlist.length,
             itemBuilder: (context, index) {
-              return ListCard(
-                name: formlist[index].deliveryType.name,
-                from: locationlist[index].startingPoint,
-                to: locationlist[index].destination,
-                date: bookedDateTimeList[index].date,
-                time: bookedDateTimeList[index].time,
-              );
+              return (bookedDateTimeList[index].date.isAfter(DateTime.now())
+                  ? ListCard(
+                      name: formlist[index].deliveryType.name,
+                      from: locationlist[index].startingPoint,
+                      to: locationlist[index].destination,
+                      date: bookedDateTimeList[index].date,
+                      time: bookedDateTimeList[index].time,
+                    )
+                  : const SizedBox(height: 0));
             })
         : const Center(
-            child: Text('Any trip has\'t been booked yet'),
+            child: Text(
+              'No Ongoing Trips',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
           );
   }
 }

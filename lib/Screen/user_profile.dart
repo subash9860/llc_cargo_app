@@ -12,7 +12,10 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final userAuth = Provider.of<UserAuth>(context, listen: false);
     Provider.of<UserData>(context, listen: false).getUserData();
-    return Column(
+    return
+    SingleChildScrollView(
+      child:
+      Column(
       children: [
         Container(
           padding: const EdgeInsets.all(10),
@@ -20,7 +23,7 @@ class UserProfile extends StatelessWidget {
             child: Stack(
               children: [
                 const CircleAvatar(
-                  radius: 93,
+                  radius: 50,
                   backgroundImage: AssetImage('./assets/pp.jpg'),
                 ),
                 Positioned(
@@ -122,6 +125,7 @@ class UserProfile extends StatelessWidget {
           ],
         )
       ],
+      ),
     );
   }
 }

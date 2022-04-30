@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:llc/provider/form_data.dart';
 import 'package:provider/provider.dart';
@@ -20,11 +21,42 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   initState() {
+    FirebaseMessaging.instance.getInitialMessage().then((value) {
+      if (value != null) {
+        final routeFrontMessage = value.data['route'];
+        print('routeFrontMessage: $routeFrontMessage');
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const InboxScreen();
+        }));
+      }
+    });
+
+    // forgroud notification
+    FirebaseMessaging.onMessage.listen((data) {
+      if (data.notification != null) {
+        print(data.notification!.body);
+        print(data.notification!.title);
+      }
+    });
+
+    // when the app is in the background but oepnd and user taps
+    // on the notification
+    FirebaseMessaging.onMessageOpenedApp.listen((data) {
+      final routeFrontMessage = data.data['route'];
+      print('routeFrontMessage: $routeFrontMessage');
+      // if (data.notification != null) {
+      // print(data.notification!.body);
+      // print(data.notification!.title);
+      // }
+    });
+
     Provider.of<FormDataModel>(context, listen: false).getFromFirebase();
     Provider.of<LocationModelData>(context, listen: false)
         .getLocationFirebase();
     Provider.of<BookedDateTimeModel>(context, listen: false)
         .getDateTimeFirebase();
+    Provider.of<ReceiverInfoModel>(context, listen: false)
+        .getReceiverInfoFirebase();
     _page = [
       {
         'page': const HomeScreen(),
@@ -94,7 +126,6 @@ class _TabScreenState extends State<TabScreen> {
           // Booking new trip screen
           Navigator.push(context,
               MaterialPageRoute(builder: (_) => const BookTripScreen()));
-          
         },
         child: const Icon(Icons.local_shipping_outlined),
       ),

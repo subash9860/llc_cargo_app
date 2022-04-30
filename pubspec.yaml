@@ -32,8 +32,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase: ^9.0.2
   firebase_auth: ^3.3.10
+  firebase_messaging: ^11.2.15
   flutter:
     sdk: flutter
+  flutter_local_notifications: ^9.4.1
   flutter_map: ^0.14.0
   fluttertoast: ^8.0.9
   geocoding: ^2.0.4

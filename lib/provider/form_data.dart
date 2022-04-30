@@ -49,11 +49,14 @@ class FormDataModel with ChangeNotifier {
 
     for (final doc in querySnapshot.docs) {
       final formData = FormModel.fromJson(doc.data());
-      formDataList.add(formData);
+
+      if (formDataList.every((element) => element.uid != formData.uid)) {
+        formDataList.add(formData);
+      } else {
+        print('already exists');
+      }
       notifyListeners();
     }
-
-    setItems(formDataList.last);
   }
 }
 
@@ -94,10 +97,15 @@ class LocationModelData with ChangeNotifier {
           uid: doc.data()['uid'],
           startingPoint: doc.data()['startingPoint'],
           destination: doc.data()['destination']);
-      locationDataList.add(locationData);
+
+      if (locationDataList
+          .every((element) => element.uid != locationData.uid)) {
+        locationDataList.add(locationData);
+      } else {
+        print('already exists');
+      }
       notifyListeners();
     }
-    setItems(locationDataList.last);
   }
 }
 
@@ -138,14 +146,22 @@ class BookedDateTimeModel with ChangeNotifier {
     for (final doc in querySnapshot.docs) {
       final bookedDateTime = BookedDateTime(
           uid: doc.data()['uid'],
-          time: 
-            TimeOfDay(hour: int.parse(doc.data()['time'].split(':')[0]), minute: int.parse(doc.data()['time'].split(':')[1])),
-          date:  
-          DateTime(int.parse(doc.data()['date'].split('-')[0]), int.parse(doc.data()['date'].split('-')[1]), int.parse(doc.data()['date'].split('-')[2])));
-      bookedDateTimeList.add(bookedDateTime);
+          time: TimeOfDay(
+              hour: int.parse(doc.data()['time'].split(':')[0]),
+              minute: int.parse(doc.data()['time'].split(':')[1])),
+          date: DateTime(
+              int.parse(doc.data()['date'].split('-')[0]),
+              int.parse(doc.data()['date'].split('-')[1]),
+              int.parse(doc.data()['date'].split('-')[2])));
+
+      if (bookedDateTimeList
+          .every((element) => element.uid != bookedDateTime.uid)) {
+        bookedDateTimeList.add(bookedDateTime);
+      } else {
+        print('already exists');
+      }
       notifyListeners();
     }
-    setItems(bookedDateTimeList.last);
   }
 }
 
@@ -190,9 +206,13 @@ class ReceiverInfoModel with ChangeNotifier {
           email: doc.data()['email'],
           phoneNumber: doc.data()['phoneNumber'],
           address: doc.data()['address']);
-      receiverInfoList.add(receiverInfo);
+      if (receiverInfoList
+          .every((element) => element.uid != receiverInfo.uid)) {
+        receiverInfoList.add(receiverInfo);
+      } else {
+        print('already exists');
+      }
       notifyListeners();
     }
-    setItems(receiverInfoList.last);
   }
 }

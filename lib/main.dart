@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
@@ -9,11 +10,20 @@ import './provider/user_data.dart';
 import './Screen/splash_screen.dart';
 import './provider/form_data.dart';
 
+// Reciecve message when app is in the background
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print('backgroundHandler');
+  print(message.data);
+  print(message.notification!.title);
+  print(message.toString());
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   runApp(const MyApp());
 }
 
