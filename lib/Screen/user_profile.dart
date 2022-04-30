@@ -21,8 +21,13 @@ class UserProfile extends StatelessWidget {
               child: Stack(
                 children: [
                   const CircleAvatar(
-                    radius: 50,
-                    child: Icon(Icons.person),
+                    backgroundColor: Colors.grey,
+                    radius: 40,
+                    child: Icon(
+                      Icons.person,
+                      size: 80,
+                      color: Colors.white,
+                    ),
                   ),
                   Positioned(
                     left: 146,

@@ -40,9 +40,10 @@ class ListCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 70, top: 5),
-                    child: Text(
-                      name,
+                    padding: const EdgeInsets.only(left: 50.0,top: 10,bottom: 10),
+                    child: 
+                    Text(
+                      name.toUpperCase(),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           color: Colors.white,
@@ -51,35 +52,35 @@ class ListCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "From:    " + from,
+                    "From:      " + from,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     ),
                   ),
                   Text(
-                    "To:       " + to,
+                    "To:           " + to,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     ),
                   ),
                   const Text(
-                    "Status      Confirmed",
+                    "Status     Confirmed",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     ),
                   ),
                   Text(
-                    "Date:      " +
+                    "Date:        " +
                         date.year.toString() +
                         " - " +
                         date.month.toString() +
                         " - " +
                         date.day.toString() +
                         '\n' +
-                        'Time:    ' +
+                        'Time:       ' +
                         time.hour.toString() +
                         ":" +
                         time.minute.toString(),
